@@ -12,6 +12,7 @@
 		BAABDBF422AE452400BB3BD6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAABDBF222AE452400BB3BD6 /* Main.storyboard */; };
 		BAABDBF622AE452500BB3BD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BAABDBF522AE452500BB3BD6 /* Assets.xcassets */; };
 		BAABDBF922AE452500BB3BD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BAABDBF722AE452500BB3BD6 /* LaunchScreen.storyboard */; };
+		BAABDC0222AE48CC00BB3BD6 /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAABDC0122AE48CC00BB3BD6 /* Extensions+UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		BAABDBF522AE452500BB3BD6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BAABDBF822AE452500BB3BD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BAABDBFA22AE452500BB3BD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BAABDC0122AE48CC00BB3BD6 /* Extensions+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		BAABDBED22AE452400BB3BD6 /* swipe-match-lbta */ = {
 			isa = PBXGroup;
 			children = (
+				BAABDC0022AE48B100BB3BD6 /* Extensions */,
 				BAABDBEE22AE452400BB3BD6 /* AppDelegate.swift */,
 				BAABDBF022AE452400BB3BD6 /* ViewController.swift */,
 				BAABDBF222AE452400BB3BD6 /* Main.storyboard */,
@@ -62,6 +65,14 @@
 				BAABDBFA22AE452500BB3BD6 /* Info.plist */,
 			);
 			path = "swipe-match-lbta";
+			sourceTree = "<group>";
+		};
+		BAABDC0022AE48B100BB3BD6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BAABDC0122AE48CC00BB3BD6 /* Extensions+UIView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +148,7 @@
 			files = (
 				BAABDBF122AE452400BB3BD6 /* ViewController.swift in Sources */,
 				BAABDBEF22AE452400BB3BD6 /* AppDelegate.swift in Sources */,
+				BAABDC0222AE48CC00BB3BD6 /* Extensions+UIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
