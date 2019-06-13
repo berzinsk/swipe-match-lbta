@@ -11,6 +11,9 @@ import UIKit
 class CardView: UIView {
     fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
 
+    // Configurations
+    fileprivate let treshold: CGFloat = 100
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -34,7 +37,7 @@ class CardView: UIView {
         case .changed:
             handleChanged(gesture: gesture)
         case .ended:
-            handleEnded()
+            handleEnded(gesture: gesture)
         default:
             break
         }
@@ -42,12 +45,29 @@ class CardView: UIView {
 
     fileprivate func handleChanged(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
-        transform = CGAffineTransform(translationX: translation.x, y: translation.y)
+        // rotation
+        // convert radiants to degrees
+        let degrees: CGFloat = translation.x / 20
+        let angle = degrees * .pi / 180
+
+        let rotationalTransformation = CGAffineTransform(rotationAngle: angle)
+        transform = rotationalTransformation.translatedBy(x: translation.x, y: translation.y)
     }
 
-    fileprivate func handleEnded() {
+    fileprivate func handleEnded(gesture: UIPanGestureRecognizer) {
+        let translationDirection: CGFloat = gesture.translation(in: nil).x > 0 ? 1 : -1
+        let shouldDismissCard = abs(gesture.translation(in: nil).x) > treshold
+
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+            if shouldDismissCard {
+                self.frame = .init(x: 1000 * translationDirection, y: 0, width: self.frame.width, height: self.frame.height)
+            } else {
+                self.transform = .identity
+            }
+        }, completion: { _ in
+            // bring card back to screen
             self.transform = .identity
-        }, completion: nil)
+            self.frame = .init(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
+        })
     }
 }
