@@ -11,15 +11,30 @@ import UIKit
 class CardView: UIView {
     var cardViewModel: CardViewModel! {
         didSet {
-            imageView.image = UIImage(named: cardViewModel.imageName)
+            let imageName = cardViewModel.imageNames.first ?? ""
+            imageView.image = UIImage(named: imageName)
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
+
+            guard cardViewModel.imageNames.count > 1 else { return }
+
+            cardViewModel.imageNames.forEach { _ in
+                let barView = UIView()
+                barView.backgroundColor = barDeselectedColor
+                barsStackView.addArrangedSubview(barView)
+            }
+
+            barsStackView.arrangedSubviews.first?.backgroundColor = .white
         }
     }
 
     fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
     fileprivate let gradientLayer = CAGradientLayer()
     fileprivate let informationLabel = UILabel()
+    fileprivate let barsStackView = UIStackView()
+
+    fileprivate var imageIndex = 0
+    fileprivate let barDeselectedColor = UIColor(white: 0, alpha: 0.1)
 
     // Configurations
     fileprivate let treshold: CGFloat = 100
@@ -30,6 +45,8 @@ class CardView: UIView {
         setupLayout()
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
+
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap)))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,6 +66,7 @@ class CardView: UIView {
         addSubview(imageView)
         imageView.fillSuperview()
 
+        setupBarsStackView()
         setupGradientLayer()
 
         addSubview(informationLabel)
@@ -63,6 +81,19 @@ class CardView: UIView {
         informationLabel.numberOfLines = 0
     }
 
+    fileprivate func setupBarsStackView() {
+        addSubview(barsStackView)
+        barsStackView.anchor(top: topAnchor,
+                             leading: leadingAnchor,
+                             bottom: nil,
+                             trailing: trailingAnchor,
+                             padding: .init(top: 8, left: 8, bottom: 8, right: 8),
+                             size: .init(width: 0, height: 4))
+
+        barsStackView.spacing = 4
+        barsStackView.distribution = .fillEqually
+    }
+
     fileprivate func setupGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.locations = [0.5, 1.1]
@@ -74,9 +105,7 @@ class CardView: UIView {
         switch gesture.state {
         case .began:
             // remove animations when dragging to stop weird behavior when card randomly appears when dragging
-            superview?.subviews.forEach { subview in
-                subview.layer.removeAllAnimations()
-            }
+            superview?.subviews.forEach { $0.layer.removeAllAnimations() }
         case .changed:
             handleChanged(gesture: gesture)
         case .ended:
@@ -84,6 +113,25 @@ class CardView: UIView {
         default:
             break
         }
+    }
+
+    @objc fileprivate func handleTap(gesture: UITapGestureRecognizer) {
+        guard let vm = cardViewModel, vm.imageNames.count > 1 else { return }
+
+        let tapLocation = gesture.location(in: nil)
+        let shouldAdvanceNextPhoto = tapLocation.x > frame.width / 2 ? true : false
+
+        if shouldAdvanceNextPhoto {
+            imageIndex = min(imageIndex + 1, cardViewModel.imageNames.count - 1)
+        } else {
+            imageIndex = max(0, imageIndex - 1)
+        }
+
+        let imageName = cardViewModel.imageNames[imageIndex]
+        imageView.image = UIImage(named: imageName)
+
+        barsStackView.arrangedSubviews.forEach { $0.backgroundColor = barDeselectedColor }
+        barsStackView.arrangedSubviews[imageIndex].backgroundColor = .white
     }
 
     fileprivate func handleChanged(gesture: UIPanGestureRecognizer) {
