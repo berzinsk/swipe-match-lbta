@@ -18,6 +18,7 @@ class CardView: UIView {
     }
 
     fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    fileprivate let gradientLayer = CAGradientLayer()
     fileprivate let informationLabel = UILabel()
 
     // Configurations
@@ -26,26 +27,7 @@ class CardView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        // custom drawing code
-        layer.cornerRadius = 10
-        clipsToBounds = true
-
-        imageView.contentMode = .scaleAspectFill
-        addSubview(imageView)
-        imageView.fillSuperview()
-
-        addSubview(informationLabel)
-
-        informationLabel.anchor(top: nil,
-                                leading: leadingAnchor,
-                                bottom: bottomAnchor,
-                                trailing: trailingAnchor,
-                                padding: .init(top: 0, left: 16, bottom: 16, right: 16))
-        informationLabel.text = "TEST NAME TEST NAME AGE"
-        informationLabel.textColor = .white
-        informationLabel.font = UIFont.systemFont(ofSize: 34, weight: .heavy)
-        informationLabel.numberOfLines = 0
-
+        setupLayout()
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
     }
@@ -54,8 +36,47 @@ class CardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        gradientLayer.frame = frame
+    }
+
+    fileprivate func setupLayout() {
+        // custom drawing code
+        layer.cornerRadius = 10
+        clipsToBounds = true
+
+        imageView.contentMode = .scaleAspectFill
+        addSubview(imageView)
+        imageView.fillSuperview()
+
+        setupGradientLayer()
+
+        addSubview(informationLabel)
+
+        informationLabel.anchor(top: nil,
+                                leading: leadingAnchor,
+                                bottom: bottomAnchor,
+                                trailing: trailingAnchor,
+                                padding: .init(top: 0, left: 16, bottom: 16, right: 16))
+
+        informationLabel.textColor = .white
+        informationLabel.numberOfLines = 0
+    }
+
+    fileprivate func setupGradientLayer() {
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.locations = [0.5, 1.1]
+
+        layer.addSublayer(gradientLayer)
+    }
+
     @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
+        case .began:
+            // remove animations when dragging to stop weird behavior when card randomly appears when dragging
+            superview?.subviews.forEach { subview in
+                subview.layer.removeAllAnimations()
+            }
         case .changed:
             handleChanged(gesture: gesture)
         case .ended:
