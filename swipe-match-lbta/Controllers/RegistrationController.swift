@@ -24,7 +24,7 @@ class RegistrationController: UIViewController {
     }()
 
     let fullNameTextField: CustomTextField = {
-        let textField = CustomTextField(padding: 16)
+        let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter full name"
         textField.backgroundColor = .white
 
@@ -32,7 +32,7 @@ class RegistrationController: UIViewController {
     }()
 
     let emailTextField: CustomTextField = {
-        let textField = CustomTextField(padding: 16)
+        let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter email"
         textField.keyboardType = .emailAddress
         textField.backgroundColor = .white
@@ -41,12 +41,25 @@ class RegistrationController: UIViewController {
     }()
 
     let passwordTextField: CustomTextField = {
-        let textField = CustomTextField(padding: 16)
+        let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter password"
         textField.isSecureTextEntry = true
         textField.backgroundColor = .white
 
         return textField
+    }()
+
+    let registerButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("Register", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        button.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1)
+        button.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 24
+        button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+
+        return button
     }()
 
     override func viewDidLoad() {
@@ -58,7 +71,8 @@ class RegistrationController: UIViewController {
             selectPhotoButton,
             fullNameTextField,
             emailTextField,
-            passwordTextField
+            passwordTextField,
+            registerButton
         ])
 
         view.addSubview(stackView)
@@ -82,5 +96,11 @@ class RegistrationController: UIViewController {
 
         view.layer.addSublayer(gradientLayer)
         gradientLayer.frame = view.bounds
+    }
+}
+
+extension RegistrationController {
+    @objc func registerButtonTapped() {
+        print("Register button tapped")
     }
 }
