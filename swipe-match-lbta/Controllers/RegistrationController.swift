@@ -62,13 +62,26 @@ class RegistrationController: UIViewController {
         return button
     }()
 
-    lazy var stackView = UIStackView(arrangedSubviews: [
+    lazy var verticalStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [
+            fullNameTextField,
+            emailTextField,
+            passwordTextField,
+            registerButton
+        ])
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.distribution = .fillEqually
+
+        return stackView
+    }()
+
+    lazy var overallStackView = UIStackView(arrangedSubviews: [
         selectPhotoButton,
-        fullNameTextField,
-        emailTextField,
-        passwordTextField,
-        registerButton
+        verticalStackView
     ])
+
+    fileprivate let gradientLayer = CAGradientLayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,10 +98,23 @@ class RegistrationController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        gradientLayer.frame = view.bounds
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if traitCollection.verticalSizeClass == .compact {
+            overallStackView.axis = .horizontal
+        } else {
+            overallStackView.axis = .vertical
+        }
+    }
+
     // MARK:- Private
 
     fileprivate func setupGradientLayer() {
-        let gradientLayer = CAGradientLayer()
         let topColor = #colorLiteral(red: 0.9921568627, green: 0.3568627451, blue: 0.3725490196, alpha: 1)
         let bottomColor = #colorLiteral(red: 0.8980392157, green: 0, blue: 0.4470588235, alpha: 1)
         gradientLayer.colors = [topColor.cgColor, bottomColor.cgColor]
@@ -99,21 +125,26 @@ class RegistrationController: UIViewController {
     }
 
     fileprivate func setupLayout() {
-        view.addSubview(stackView)
+        view.addSubview(overallStackView)
 
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.anchor(top: nil,
+        overallStackView.axis = .vertical
+        selectPhotoButton.widthAnchor.constraint(equalToConstant: 275).isActive = true
+        overallStackView.spacing = 8
+        overallStackView.anchor(top: nil,
                          leading: view.leadingAnchor,
                          bottom: nil,
                          trailing: view.trailingAnchor,
                          padding: .init(top: 0, left: 48, bottom: 0, right: 48))
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 
     fileprivate func setupNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    fileprivate func setupTapGesture() {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
     }
 
     @objc fileprivate func handleKeyboardShow(notification: Notification) {
@@ -124,13 +155,9 @@ class RegistrationController: UIViewController {
         print(keyboardFrame)
 
         // Figure out the gap between register button to the bottom of the screen
-        let bottomSpace = view.frame.height - stackView.frame.origin.y - stackView.frame.height
+        let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
         let difference = keyboardFrame.height - bottomSpace
         view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
-    }
-
-    fileprivate func setupTapGesture() {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
     }
 
     @objc fileprivate func handleTapDismiss() {
