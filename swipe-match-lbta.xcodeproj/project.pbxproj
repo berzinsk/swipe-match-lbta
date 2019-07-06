@@ -11,6 +11,7 @@
 		BA1C66C222CFA4B600582CAE /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1C66C122CFA4B600582CAE /* CustomTextField.swift */; };
 		BA26AC0422C0D8A000962F36 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA26AC0322C0D8A000962F36 /* User.swift */; };
 		BA2A389022CA3A9700F60E73 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2A388F22CA3A9700F60E73 /* CardViewModel.swift */; };
+		BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */; };
 		BA8BD1CA22B21B8A00C3BFEA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BD1C922B21B8A00C3BFEA /* CardView.swift */; };
 		BAABDBEF22AE452400BB3BD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAABDBEE22AE452400BB3BD6 /* AppDelegate.swift */; };
 		BAABDBF122AE452400BB3BD6 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAABDBF022AE452400BB3BD6 /* HomeController.swift */; };
@@ -28,6 +29,7 @@
 		BA1C66C122CFA4B600582CAE /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		BA26AC0322C0D8A000962F36 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BA2A388F22CA3A9700F60E73 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		BA8BD1C922B21B8A00C3BFEA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		BAABDBEB22AE452400BB3BD6 /* swipe-match-lbta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "swipe-match-lbta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAABDBEE22AE452400BB3BD6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				BA2A388F22CA3A9700F60E73 /* CardViewModel.swift */,
+				BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAABDBF122AE452400BB3BD6 /* HomeController.swift in Sources */,
+				BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */,
 				BA1C66C222CFA4B600582CAE /* CustomTextField.swift in Sources */,
 				BAE18B0D22AFC8FE001BF8BB /* HomeBottomControlsStackView.swift in Sources */,
 				BABF1A0322CD09E90030CF86 /* Advertiser.swift in Sources */,
