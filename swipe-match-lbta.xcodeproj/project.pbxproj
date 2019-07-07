@@ -3,14 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		784EA587DEE16DA8F6767298 /* Pods_swipe_match_lbta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB88E1C7BA354C64DAEE39F8 /* Pods_swipe_match_lbta.framework */; };
 		BA1C66C022CF9F4C00582CAE /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */; };
 		BA1C66C222CFA4B600582CAE /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1C66C122CFA4B600582CAE /* CustomTextField.swift */; };
 		BA26AC0422C0D8A000962F36 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA26AC0322C0D8A000962F36 /* User.swift */; };
 		BA2A389022CA3A9700F60E73 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2A388F22CA3A9700F60E73 /* CardViewModel.swift */; };
+		BA39377822D1C981007625A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA39377722D1C981007625A5 /* GoogleService-Info.plist */; };
 		BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */; };
 		BA8BD1CA22B21B8A00C3BFEA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BD1C922B21B8A00C3BFEA /* CardView.swift */; };
 		BAABDBEF22AE452400BB3BD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAABDBEE22AE452400BB3BD6 /* AppDelegate.swift */; };
@@ -25,10 +27,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5711E0B38934A1D46061D096 /* Pods-swipe-match-lbta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swipe-match-lbta.release.xcconfig"; path = "Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta.release.xcconfig"; sourceTree = "<group>"; };
 		BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		BA1C66C122CFA4B600582CAE /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		BA26AC0322C0D8A000962F36 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BA2A388F22CA3A9700F60E73 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		BA39377722D1C981007625A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		BA8BD1C922B21B8A00C3BFEA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		BAABDBEB22AE452400BB3BD6 /* swipe-match-lbta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "swipe-match-lbta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +46,8 @@
 		BABF1A0222CD09E90030CF86 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		BAE18B0C22AFC8FE001BF8BB /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
 		BAE18B0E22AFCCC3001BF8BB /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
+		D9C0A954227E38C1ABC39A12 /* Pods-swipe-match-lbta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swipe-match-lbta.debug.xcconfig"; path = "Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta.debug.xcconfig"; sourceTree = "<group>"; };
+		FB88E1C7BA354C64DAEE39F8 /* Pods_swipe_match_lbta.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_swipe_match_lbta.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,12 +55,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				784EA587DEE16DA8F6767298 /* Pods_swipe_match_lbta.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B2E3F6BF0350C830288E1B2A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D9C0A954227E38C1ABC39A12 /* Pods-swipe-match-lbta.debug.xcconfig */,
+				5711E0B38934A1D46061D096 /* Pods-swipe-match-lbta.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		BA00EB9822AF7A03000F1FB9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +105,8 @@
 			children = (
 				BAABDBED22AE452400BB3BD6 /* swipe-match-lbta */,
 				BAABDBEC22AE452400BB3BD6 /* Products */,
+				B2E3F6BF0350C830288E1B2A /* Pods */,
+				BAD57909478E74C174A7253D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +130,7 @@
 				BAABDBF222AE452400BB3BD6 /* Main.storyboard */,
 				BAABDBF522AE452500BB3BD6 /* Assets.xcassets */,
 				BAABDBF722AE452500BB3BD6 /* LaunchScreen.storyboard */,
+				BA39377722D1C981007625A5 /* GoogleService-Info.plist */,
 				BAABDBFA22AE452500BB3BD6 /* Info.plist */,
 			);
 			path = "swipe-match-lbta";
@@ -134,6 +153,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		BAD57909478E74C174A7253D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB88E1C7BA354C64DAEE39F8 /* Pods_swipe_match_lbta.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -141,9 +168,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BAABDBFD22AE452500BB3BD6 /* Build configuration list for PBXNativeTarget "swipe-match-lbta" */;
 			buildPhases = (
+				26940736821911BA8DDC73C0 /* [CP] Check Pods Manifest.lock */,
 				BAABDBE722AE452400BB3BD6 /* Sources */,
 				BAABDBE822AE452400BB3BD6 /* Frameworks */,
 				BAABDBE922AE452400BB3BD6 /* Resources */,
+				376D9105BF6AC28CB0BD1490 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -193,12 +222,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAABDBF922AE452500BB3BD6 /* LaunchScreen.storyboard in Resources */,
+				BA39377822D1C981007625A5 /* GoogleService-Info.plist in Resources */,
 				BAABDBF622AE452500BB3BD6 /* Assets.xcassets in Resources */,
 				BAABDBF422AE452400BB3BD6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		26940736821911BA8DDC73C0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-swipe-match-lbta-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		376D9105BF6AC28CB0BD1490 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BAABDBE722AE452400BB3BD6 /* Sources */ = {
@@ -360,6 +432,7 @@
 		};
 		BAABDBFE22AE452500BB3BD6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9C0A954227E38C1ABC39A12 /* Pods-swipe-match-lbta.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -379,6 +452,7 @@
 		};
 		BAABDBFF22AE452500BB3BD6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5711E0B38934A1D46061D096 /* Pods-swipe-match-lbta.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

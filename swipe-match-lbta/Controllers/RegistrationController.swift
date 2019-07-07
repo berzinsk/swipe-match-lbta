@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class RegistrationController: UIViewController {
 
@@ -64,7 +66,7 @@ class RegistrationController: UIViewController {
         button.setTitleColor(.gray, for: .disabled)
         button.isEnabled = false
         button.layer.cornerRadius = 22
-        button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
 
         return button
     }()
@@ -161,6 +163,14 @@ class RegistrationController: UIViewController {
     fileprivate func setupTapGesture() {
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
     }
+
+    fileprivate func showHudWithError(error: Error) {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Failed registration"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: view)
+        hud.dismiss(afterDelay: 4)
+    }
 }
 
 extension RegistrationController {
@@ -187,8 +197,17 @@ extension RegistrationController {
         })
     }
 
-    @objc func registerButtonTapped() {
-        print("Register button tapped")
+    @objc func handleRegister() {
+        handleTapDismiss()
+        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+        Auth.auth().createUser(withEmail: email, password: password) { [unowned self] res, error in
+            if let error = error {
+                self.showHudWithError(error: error)
+                return
+            }
+
+            print("Successfully registered user: ", res?.user.uid ?? "")
+        }
     }
 
     @objc fileprivate func handleTextChange(textField: UITextField) {

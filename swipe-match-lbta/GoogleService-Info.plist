@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>782906703061-je6ourun7nun3q9m5l8ikkfqpd0sidju.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.782906703061-je6ourun7nun3q9m5l8ikkfqpd0sidju</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAL3S_RJx4DOFpU0lsjgQhsPY3Q46_I8RA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>782906703061</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>me.karlis.swipe-match-lbta</string>
+	<key>PROJECT_ID</key>
+	<string>swipe-match-lbta</string>
+	<key>STORAGE_BUCKET</key>
+	<string>swipe-match-lbta.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:782906703061:ios:ffe873da860497f7</string>
+	<key>DATABASE_URL</key>
+	<string>https://swipe-match-lbta.firebaseio.com</string>
+</dict>
+</plist>

@@ -1,0 +1,6 @@
+framework module Pods_swipe_match_lbta {
+  umbrella header "Pods-swipe-match-lbta-umbrella.h"
+
+  export *
+  module * { export * }
+}
