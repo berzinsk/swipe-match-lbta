@@ -95,6 +95,13 @@ class RegistrationController: UIViewController {
 
     fileprivate let gradientLayer = CAGradientLayer()
 
+    fileprivate var registeringHUD: JGProgressHUD = {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Register"
+
+        return hud
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -108,7 +115,7 @@ class RegistrationController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillLayoutSubviews() {
@@ -137,6 +144,10 @@ class RegistrationController: UIViewController {
 
         registrationViewModel.bindableImage.bind { [unowned self] image in
             self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+
+        registrationViewModel.bindableIsRegistering.bind { [unowned self] isRegistering in
+            isRegistering == true ? self.registeringHUD.show(in: self.view) : self.registeringHUD.dismiss()
         }
     }
 
@@ -174,6 +185,7 @@ class RegistrationController: UIViewController {
     }
 
     fileprivate func showHudWithError(error: Error) {
+        registrationViewModel.bindableIsRegistering.value = false
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Failed registration"
         hud.detailTextLabel.text = error.localizedDescription
@@ -188,7 +200,6 @@ extension RegistrationController {
             return
         }
         let keyboardFrame = value.cgRectValue
-        print(keyboardFrame)
 
         // Figure out the gap between register button to the bottom of the screen
         let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
@@ -208,14 +219,13 @@ extension RegistrationController {
 
     @objc func handleRegister() {
         handleTapDismiss()
-        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
-        Auth.auth().createUser(withEmail: email, password: password) { [unowned self] res, error in
+        registrationViewModel.performRegistration { [unowned self] error in
             if let error = error {
                 self.showHudWithError(error: error)
                 return
             }
 
-            print("Successfully registered user: ", res?.user.uid ?? "")
+            print("Finished registering our user")
         }
     }
 
