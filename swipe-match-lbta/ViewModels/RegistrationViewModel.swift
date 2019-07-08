@@ -9,7 +9,13 @@
 import UIKit
 import Firebase
 
+enum UserError: Error {
+    case userNotFound
+}
+
 class RegistrationViewModel {
+    typealias Completion = (Error?) -> ()
+
     var bindableImage = Bindable<UIImage>()
     var bindableIsFormValid = Bindable<Bool>()
     var bindableIsRegistering = Bindable<Bool>()
@@ -32,7 +38,7 @@ class RegistrationViewModel {
         }
     }
 
-    func performRegistration(completion: @escaping (Error?) ->()) {
+    func performRegistration(completion: @escaping Completion) {
         guard let email = email, let password = password else { return }
 
         bindableIsRegistering.value = true
@@ -47,7 +53,7 @@ class RegistrationViewModel {
         }
     }
 
-    fileprivate func storeImage(completion: @escaping (Error?) -> ()) {
+    fileprivate func storeImage(completion: @escaping Completion) {
         let filename = UUID().uuidString
         let ref = Storage.storage().reference(withPath: "/images/\(filename)")
         let imageData = bindableImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
@@ -63,9 +69,28 @@ class RegistrationViewModel {
                     return
                 }
 
-                self.bindableIsRegistering.value = false
-                completion(nil)
+                let imageUrl = url?.absoluteString ?? ""
+                self.saveInfoToFirestore(imageUrl: imageUrl, completion: completion)
             }
+        }
+    }
+
+    fileprivate func saveInfoToFirestore(imageUrl: String, completion: @escaping Completion) {
+        guard let uid = Auth.auth().currentUser?.uid, let fullName = fullName else {
+            completion(UserError.userNotFound)
+            return
+        }
+
+        let documentData = ["uid": uid, "fullName": fullName, "imageUrl1": imageUrl]
+
+        Firestore.firestore().collection("users").document(uid).setData(documentData) { error in
+            if let error = error {
+                completion(error)
+                return
+            }
+
+            self.bindableIsRegistering.value = false
+            completion(nil)
         }
     }
 
