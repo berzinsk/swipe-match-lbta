@@ -43,24 +43,28 @@ class RegistrationViewModel {
                 return
             }
 
-            let filename = UUID().uuidString
-            let ref = Storage.storage().reference(withPath: "/images/\(filename)")
-            let imageData = self.bindableImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
-            ref.putData(imageData, metadata: nil) { [unowned self] _, error in
+            self.storeImage(completion: completion)
+        }
+    }
+
+    fileprivate func storeImage(completion: @escaping (Error?) -> ()) {
+        let filename = UUID().uuidString
+        let ref = Storage.storage().reference(withPath: "/images/\(filename)")
+        let imageData = bindableImage.value?.jpegData(compressionQuality: 0.75) ?? Data()
+        ref.putData(imageData, metadata: nil) { [unowned self] _, error in
+            if let error = error {
+                completion(error)
+                return
+            }
+
+            ref.downloadURL { [unowned self] url, error in
                 if let error = error {
                     completion(error)
                     return
                 }
 
-                ref.downloadURL { [unowned self] url, error in
-                    if let error = error {
-                        completion(error)
-                        return
-                    }
-
-                    self.bindableIsRegistering.value = false
-                    completion(nil)
-                }
+                self.bindableIsRegistering.value = false
+                completion(nil)
             }
         }
     }
