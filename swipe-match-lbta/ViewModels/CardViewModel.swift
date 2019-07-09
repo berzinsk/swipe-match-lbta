@@ -19,13 +19,12 @@ class CardViewModel {
     let textAlignment: NSTextAlignment
 
     // Reactive programming
-    var imageIndexObserver: ((UIImage, Int) -> ())?
+    var imageIndexObserver: ((Int, String?) -> ())?
 
     fileprivate var imageIndex = 0 {
         didSet {
-            let imageName = imageNames[imageIndex]
-            let image = UIImage(named: imageName) ?? UIImage()
-            imageIndexObserver?(image, imageIndex)
+            let imageUrl = imageNames[imageIndex]
+            imageIndexObserver?(imageIndex, imageUrl)
         }
     }
 
