@@ -91,9 +91,10 @@ class HomeController: UIViewController {
 
 extension HomeController {
     @objc func handleSettings() {
-        let registrationController = RegistrationController()
-        registrationController.modalPresentationStyle = .fullScreen
-        present(registrationController, animated: true, completion: nil)
+        let settingsController = SettingsController()
+        let navController = UINavigationController(rootViewController: settingsController)
+        settingsController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true, completion: nil)
     }
 
     @objc func handleRefresh() {
