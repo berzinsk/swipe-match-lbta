@@ -15,6 +15,7 @@
 		BA3877DF22D2391000DB00D9 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3877DE22D2391000DB00D9 /* Bindable.swift */; };
 		BA39377822D1C981007625A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA39377722D1C981007625A5 /* GoogleService-Info.plist */; };
 		BA4B3CF622D758DB0041D4E0 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4B3CF522D758DB0041D4E0 /* SettingsController.swift */; };
+		BA4B3CF922D786750041D4E0 /* CustomImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4B3CF822D786750041D4E0 /* CustomImagePickerController.swift */; };
 		BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */; };
 		BA8BD1CA22B21B8A00C3BFEA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BD1C922B21B8A00C3BFEA /* CardView.swift */; };
 		BAABDBEF22AE452400BB3BD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAABDBEE22AE452400BB3BD6 /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 		BA3877DE22D2391000DB00D9 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		BA39377722D1C981007625A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BA4B3CF522D758DB0041D4E0 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		BA4B3CF822D786750041D4E0 /* CustomImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerController.swift; sourceTree = "<group>"; };
 		BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		BA8BD1C922B21B8A00C3BFEA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		BAABDBEB22AE452400BB3BD6 /* swipe-match-lbta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "swipe-match-lbta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +105,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		BA4B3CF722D786620041D4E0 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				BA4B3CF822D786750041D4E0 /* CustomImagePickerController.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 		BA51D2F922C0D7F100601488 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +143,7 @@
 		BAABDBED22AE452400BB3BD6 /* swipe-match-lbta */ = {
 			isa = PBXGroup;
 			children = (
+				BA4B3CF722D786620041D4E0 /* Custom */,
 				BA3877DD22D2390300DB00D9 /* Helpers */,
 				BA2A388E22CA3A8100F60E73 /* ViewModels */,
 				BAD0264C22CA39D600B6B717 /* Controllers */,
@@ -301,6 +312,7 @@
 				BAABDC0222AE48CC00BB3BD6 /* Extensions+UIView.swift in Sources */,
 				BA2A389022CA3A9700F60E73 /* CardViewModel.swift in Sources */,
 				BA8BD1CA22B21B8A00C3BFEA /* CardView.swift in Sources */,
+				BA4B3CF922D786750041D4E0 /* CustomImagePickerController.swift in Sources */,
 				BA4B3CF622D758DB0041D4E0 /* SettingsController.swift in Sources */,
 				BAE18B0F22AFCCC3001BF8BB /* TopNavigationStackView.swift in Sources */,
 				BA1C66C022CF9F4C00582CAE /* RegistrationController.swift in Sources */,

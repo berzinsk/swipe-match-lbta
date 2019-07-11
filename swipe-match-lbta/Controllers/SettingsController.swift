@@ -8,10 +8,6 @@
 
 import UIKit
 
-class CustomImagePickerController: UIImagePickerController {
-    var imageButton: UIButton?
-}
-
 class SettingsController: UITableViewController {
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))
@@ -54,8 +50,8 @@ class SettingsController: UITableViewController {
 
 extension SettingsController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let padding: CGFloat = 16
         let header = UIView()
+        let padding: CGFloat = 16
 
         header.addSubview(image1Button)
         image1Button.anchor(top: header.topAnchor,
