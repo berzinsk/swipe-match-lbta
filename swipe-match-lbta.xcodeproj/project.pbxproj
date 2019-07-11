@@ -16,6 +16,9 @@
 		BA39377822D1C981007625A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BA39377722D1C981007625A5 /* GoogleService-Info.plist */; };
 		BA4B3CF622D758DB0041D4E0 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4B3CF522D758DB0041D4E0 /* SettingsController.swift */; };
 		BA4B3CF922D786750041D4E0 /* CustomImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4B3CF822D786750041D4E0 /* CustomImagePickerController.swift */; };
+		BA4B3CFB22D79C270041D4E0 /* SettingsHeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4B3CFA22D79C270041D4E0 /* SettingsHeaderLabel.swift */; };
+		BA4B3CFD22D79CC30041D4E0 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4B3CFC22D79CC30041D4E0 /* SettingsCell.swift */; };
+		BA4B3CFF22D79F180041D4E0 /* SettingsTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4B3CFE22D79F180041D4E0 /* SettingsTextField.swift */; };
 		BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */; };
 		BA8BD1CA22B21B8A00C3BFEA /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8BD1C922B21B8A00C3BFEA /* CardView.swift */; };
 		BAABDBEF22AE452400BB3BD6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAABDBEE22AE452400BB3BD6 /* AppDelegate.swift */; };
@@ -39,6 +42,9 @@
 		BA39377722D1C981007625A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BA4B3CF522D758DB0041D4E0 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		BA4B3CF822D786750041D4E0 /* CustomImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImagePickerController.swift; sourceTree = "<group>"; };
+		BA4B3CFA22D79C270041D4E0 /* SettingsHeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderLabel.swift; sourceTree = "<group>"; };
+		BA4B3CFC22D79CC30041D4E0 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		BA4B3CFE22D79F180041D4E0 /* SettingsTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextField.swift; sourceTree = "<group>"; };
 		BA51125B22D08A89003AE8A1 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		BA8BD1C922B21B8A00C3BFEA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		BAABDBEB22AE452400BB3BD6 /* swipe-match-lbta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "swipe-match-lbta.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,10 +86,13 @@
 		BA00EB9822AF7A03000F1FB9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA4B3CFA22D79C270041D4E0 /* SettingsHeaderLabel.swift */,
+				BA4B3CFC22D79CC30041D4E0 /* SettingsCell.swift */,
 				BA8BD1C922B21B8A00C3BFEA /* CardView.swift */,
 				BAE18B0C22AFC8FE001BF8BB /* HomeBottomControlsStackView.swift */,
 				BAE18B0E22AFCCC3001BF8BB /* TopNavigationStackView.swift */,
 				BA1C66C122CFA4B600582CAE /* CustomTextField.swift */,
+				BA4B3CFE22D79F180041D4E0 /* SettingsTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -103,14 +112,6 @@
 				BA3877DE22D2391000DB00D9 /* Bindable.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		BA4B3CF722D786620041D4E0 /* Custom */ = {
-			isa = PBXGroup;
-			children = (
-				BA4B3CF822D786750041D4E0 /* CustomImagePickerController.swift */,
-			);
-			path = Custom;
 			sourceTree = "<group>";
 		};
 		BA51D2F922C0D7F100601488 /* Model */ = {
@@ -143,7 +144,6 @@
 		BAABDBED22AE452400BB3BD6 /* swipe-match-lbta */ = {
 			isa = PBXGroup;
 			children = (
-				BA4B3CF722D786620041D4E0 /* Custom */,
 				BA3877DD22D2390300DB00D9 /* Helpers */,
 				BA2A388E22CA3A8100F60E73 /* ViewModels */,
 				BAD0264C22CA39D600B6B717 /* Controllers */,
@@ -171,6 +171,7 @@
 		BAD0264C22CA39D600B6B717 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BA4B3CF822D786750041D4E0 /* CustomImagePickerController.swift */,
 				BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */,
 				BA4B3CF522D758DB0041D4E0 /* SettingsController.swift */,
 				BAABDBF022AE452400BB3BD6 /* HomeController.swift */,
@@ -302,9 +303,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA4B3CFF22D79F180041D4E0 /* SettingsTextField.swift in Sources */,
 				BA3877DF22D2391000DB00D9 /* Bindable.swift in Sources */,
 				BAABDBF122AE452400BB3BD6 /* HomeController.swift in Sources */,
 				BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */,
+				BA4B3CFD22D79CC30041D4E0 /* SettingsCell.swift in Sources */,
 				BA1C66C222CFA4B600582CAE /* CustomTextField.swift in Sources */,
 				BAE18B0D22AFC8FE001BF8BB /* HomeBottomControlsStackView.swift in Sources */,
 				BABF1A0322CD09E90030CF86 /* Advertiser.swift in Sources */,
@@ -316,6 +319,7 @@
 				BA4B3CF622D758DB0041D4E0 /* SettingsController.swift in Sources */,
 				BAE18B0F22AFCCC3001BF8BB /* TopNavigationStackView.swift in Sources */,
 				BA1C66C022CF9F4C00582CAE /* RegistrationController.swift in Sources */,
+				BA4B3CFB22D79C270041D4E0 /* SettingsHeaderLabel.swift in Sources */,
 				BA26AC0422C0D8A000962F36 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
