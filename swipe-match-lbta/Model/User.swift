@@ -10,7 +10,7 @@ import UIKit
 
 struct User: ProducesCardViewModel {
     // defining our properties for our model layer
-    let name: String
+    var name: String?
     var age: Int?
     var profession: String?
     var imageUrl1: String?
@@ -29,7 +29,7 @@ struct User: ProducesCardViewModel {
         let ageString = age != nil ? "\(age!)" : "N\\A"
         let professionString = profession != nil ? profession! : "Not available"
 
-        let attributedText = NSMutableAttributedString(string: name, attributes: [.font: UIFont.systemFont(ofSize: 32, weight: .heavy)])
+        let attributedText = NSMutableAttributedString(string: name ?? "", attributes: [.font: UIFont.systemFont(ofSize: 32, weight: .heavy)])
         attributedText.append(NSMutableAttributedString(string: "  \(ageString)", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .regular)]))
         attributedText.append(NSMutableAttributedString(string: "\n\(professionString)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)]))
 
