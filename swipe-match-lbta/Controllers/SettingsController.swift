@@ -99,10 +99,33 @@ class SettingsController: UITableViewController {
     }
 
     fileprivate func loadUserPhotos() {
-        guard let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) else { return }
+        loadPhoto(imageUrl: user?.imageUrl1, forButton: image1Button)
+        loadPhoto(imageUrl: user?.imageUrl2, forButton: image2Button)
+        loadPhoto(imageUrl: user?.imageUrl3, forButton: image3Button)
+//        if let imageUrl1 = user?.imageUrl1, let url = URL(string: imageUrl1) {
+//            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self] (image, _, _, _, _, _) in
+//                self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+//            }
+//        }
+//
+//        if let imageUrl2 = user?.imageUrl2, let url = URL(string: imageUrl2) {
+//            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self] (image, _, _, _, _, _) in
+//                self.image2Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+//            }
+//        }
+//
+//        if let imageUrl3 = user?.imageUrl3, let url = URL(string: imageUrl3) {
+//            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self] (image, _, _, _, _, _) in
+//                self.image3Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+//            }
+//        }
+    }
+
+    fileprivate func loadPhoto(imageUrl: String?, forButton button: UIButton) {
+        guard let urlString = imageUrl, let url = URL(string: urlString) else { return }
 
         SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self] (image, _, _, _, _, _) in
-            self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+            button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
 }
@@ -168,6 +191,45 @@ extension SettingsController {
 
         return 40
     }
+
+    // TODO: this should be called only when saving
+    fileprivate func upload(image: UIImage?, fromButtom button: UIButton?) {
+        guard let uploadData = image?.jpegData(compressionQuality: 0.7) else { return }
+
+        let filename = UUID().uuidString
+        let ref = Storage.storage().reference(withPath: "/images/\(filename)")
+
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Uploading image..."
+        hud.show(in: view)
+
+        ref.putData(uploadData, metadata: nil) { [unowned self] _, error in
+            if let error = error {
+                hud.dismiss()
+                print("Failed to upload image to storage: ", error)
+                return
+            }
+
+            print("Finished uploading image")
+            ref.downloadURL { url, error in
+                hud.dismiss()
+
+                if let error = error {
+                    print("Failed to retrieve image download URL:", error)
+                    return
+                }
+
+                print("Finished getting download url: ", url?.absoluteString ?? "")
+                if button == self.image1Button {
+                    self.user?.imageUrl1 = url?.absoluteString
+                } else if button == self.image2Button {
+                    self.user?.imageUrl2 = url?.absoluteString
+                } else {
+                    self.user?.imageUrl3 = url?.absoluteString
+                }
+            }
+        }
+    }
 }
 
 extension SettingsController {
@@ -176,7 +238,6 @@ extension SettingsController {
     }
 
     @objc fileprivate func handleSelectPhoto(button: UIButton) {
-        print("Selecting photo with button: ", button)
         let imagePicker = CustomImagePickerController()
         imagePicker.delegate = self
         imagePicker.imageButton = button
@@ -191,7 +252,9 @@ extension SettingsController {
             "fullName": user?.name ?? "",
             "imageUrl1": user?.imageUrl1 ?? "",
             "age": user?.age ?? -1,
-            "profession": user?.profession ?? ""
+            "profession": user?.profession ?? "",
+            "imageUrl2": user?.imageUrl2 ?? "",
+            "imageUrl3": user?.imageUrl3 ?? ""
         ]
 
         let hud = JGProgressHUD(style: .dark)
@@ -230,5 +293,8 @@ extension SettingsController: UIImagePickerControllerDelegate, UINavigationContr
         imageButton?.setImage(selectedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
 
         dismiss(animated: true)
+
+        // TODO: refactor so that image is uploaded only when saving instead of when image selected
+        self.upload(image: selectedImage, fromButtom: imageButton)
     }
 }
