@@ -102,29 +102,12 @@ class SettingsController: UITableViewController {
         loadPhoto(imageUrl: user?.imageUrl1, forButton: image1Button)
         loadPhoto(imageUrl: user?.imageUrl2, forButton: image2Button)
         loadPhoto(imageUrl: user?.imageUrl3, forButton: image3Button)
-//        if let imageUrl1 = user?.imageUrl1, let url = URL(string: imageUrl1) {
-//            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self] (image, _, _, _, _, _) in
-//                self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
-//            }
-//        }
-//
-//        if let imageUrl2 = user?.imageUrl2, let url = URL(string: imageUrl2) {
-//            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self] (image, _, _, _, _, _) in
-//                self.image2Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
-//            }
-//        }
-//
-//        if let imageUrl3 = user?.imageUrl3, let url = URL(string: imageUrl3) {
-//            SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self] (image, _, _, _, _, _) in
-//                self.image3Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
-//            }
-//        }
     }
 
     fileprivate func loadPhoto(imageUrl: String?, forButton button: UIButton) {
         guard let urlString = imageUrl, let url = URL(string: urlString) else { return }
 
-        SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self] (image, _, _, _, _, _) in
+        SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
             button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
@@ -132,7 +115,7 @@ class SettingsController: UITableViewController {
 
 extension SettingsController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -140,6 +123,18 @@ extension SettingsController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 5 {
+            let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil)
+            ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAgeChange), for: .valueChanged)
+            ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAgeChange), for: .valueChanged)
+            ageRangeCell.minLabel.text = "Min: \(user?.minSeekingAge ?? -1)"
+            ageRangeCell.maxLabel.text = "Max: \(user?.maxSeekingAge ?? -1)"
+            ageRangeCell.minSlider.value = Float(user?.minSeekingAge ?? 18)
+            ageRangeCell.maxSlider.value = Float(user?.maxSeekingAge ?? 18)
+
+            return ageRangeCell
+        }
+
         let cell = SettingsCell(style: .default, reuseIdentifier: nil)
 
         switch indexPath.section {
@@ -177,9 +172,13 @@ extension SettingsController {
             headerLabel.text = "Profession"
         case 3:
             headerLabel.text = "Age"
-        default:
+        case 4:
             headerLabel.text = "Bio"
+        default:
+            headerLabel.text = "Seeking Age Range"
         }
+
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 16)
 
         return headerLabel
     }
@@ -230,6 +229,20 @@ extension SettingsController {
             }
         }
     }
+
+    fileprivate func updateSliders() {
+        guard let ageRangeCell = tableView.cellForRow(at: [5, 0]) as? AgeRangeCell else { return }
+
+        let minValue = Int(ageRangeCell.minSlider.value)
+        var maxValue = Int(ageRangeCell.maxSlider.value)
+        maxValue = max(minValue, maxValue)
+        ageRangeCell.maxSlider.value = Float(maxValue)
+        ageRangeCell.minLabel.text = "Min: \(minValue)"
+        ageRangeCell.maxLabel.text = "Max: \(maxValue)"
+
+        user?.minSeekingAge = minValue
+        user?.maxSeekingAge = maxValue
+    }
 }
 
 extension SettingsController {
@@ -254,7 +267,9 @@ extension SettingsController {
             "age": user?.age ?? -1,
             "profession": user?.profession ?? "",
             "imageUrl2": user?.imageUrl2 ?? "",
-            "imageUrl3": user?.imageUrl3 ?? ""
+            "imageUrl3": user?.imageUrl3 ?? "",
+            "minSeekingAge": user?.minSeekingAge ?? -1,
+            "maxSeekingAge": user?.maxSeekingAge ?? -1
         ]
 
         let hud = JGProgressHUD(style: .dark)
@@ -282,6 +297,14 @@ extension SettingsController {
 
     @objc fileprivate func handleAgeChange(textField: UITextField) {
         user?.age = Int(textField.text ?? "")
+    }
+
+    @objc fileprivate func handleMinAgeChange(slider: UISlider) {
+        updateSliders()
+    }
+
+    @objc fileprivate func handleMaxAgeChange(slider: UISlider) {
+        updateSliders()
     }
 }
 

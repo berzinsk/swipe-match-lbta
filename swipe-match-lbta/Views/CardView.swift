@@ -14,7 +14,6 @@ class CardView: UIView {
         didSet {
             let imageName = cardViewModel.imageNames.first ?? ""
             imageView.sd_setImage(with: URL(string: imageName))
-//            imageView.image = UIImage(named: imageName)
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
 
