@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1226335922E1E23D00CFB6B7 /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1226335822E1E23D00CFB6B7 /* AgeRangeCell.swift */; };
+		1226336022E20BE300CFB6B7 /* Extensions+Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1226335F22E20BE300CFB6B7 /* Extensions+Firestore.swift */; };
 		784EA587DEE16DA8F6767298 /* Pods_swipe_match_lbta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB88E1C7BA354C64DAEE39F8 /* Pods_swipe_match_lbta.framework */; };
 		BA1C66C022CF9F4C00582CAE /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */; };
 		BA1C66C222CFA4B600582CAE /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1C66C122CFA4B600582CAE /* CustomTextField.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		1226335822E1E23D00CFB6B7 /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
+		1226335F22E20BE300CFB6B7 /* Extensions+Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Firestore.swift"; sourceTree = "<group>"; };
 		5711E0B38934A1D46061D096 /* Pods-swipe-match-lbta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swipe-match-lbta.release.xcconfig"; path = "Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta.release.xcconfig"; sourceTree = "<group>"; };
 		BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		BA1C66C122CFA4B600582CAE /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -76,6 +78,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1226335C22E2033200CFB6B7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		B2E3F6BF0350C830288E1B2A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +156,7 @@
 		BAABDBED22AE452400BB3BD6 /* swipe-match-lbta */ = {
 			isa = PBXGroup;
 			children = (
+				1226335C22E2033200CFB6B7 /* Protocols */,
 				BA3877DD22D2390300DB00D9 /* Helpers */,
 				BA2A388E22CA3A8100F60E73 /* ViewModels */,
 				BAD0264C22CA39D600B6B717 /* Controllers */,
@@ -167,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				BAABDC0122AE48CC00BB3BD6 /* Extensions+UIView.swift */,
+				1226335F22E20BE300CFB6B7 /* Extensions+Firestore.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -309,6 +320,7 @@
 				BA4B3CFF22D79F180041D4E0 /* SettingsTextField.swift in Sources */,
 				BA3877DF22D2391000DB00D9 /* Bindable.swift in Sources */,
 				BAABDBF122AE452400BB3BD6 /* HomeController.swift in Sources */,
+				1226336022E20BE300CFB6B7 /* Extensions+Firestore.swift in Sources */,
 				BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */,
 				BA4B3CFD22D79CC30041D4E0 /* SettingsCell.swift in Sources */,
 				BA1C66C222CFA4B600582CAE /* CustomTextField.swift in Sources */,

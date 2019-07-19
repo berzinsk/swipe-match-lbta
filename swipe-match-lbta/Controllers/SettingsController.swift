@@ -11,7 +11,13 @@ import Firebase
 import JGProgressHUD
 import SDWebImage
 
+protocol SettingsControllerDelegate {
+    func didSaveSettings()
+}
+
 class SettingsController: UITableViewController {
+    var delegate: SettingsControllerDelegate?
+
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image3Button = createButton(selector: #selector(handleSelectPhoto))
@@ -50,7 +56,16 @@ class SettingsController: UITableViewController {
 
         setupTableView()
         setupNavigationItems()
-        fetchCurrentUser()
+        Firestore.firestore().fetchCurrentUser { [unowned self] user, error in
+            if let error = error {
+                print("Failed to fetch user: ", error)
+                return
+            }
+            
+            self.user = user
+            self.loadUserPhotos()
+            self.tableView.reloadData()
+        }
     }
 
     fileprivate func createButton(selector: Selector) -> UIButton {
@@ -79,23 +94,6 @@ class SettingsController: UITableViewController {
             UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave)),
             UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleCancel))
         ]
-    }
-
-    fileprivate func fetchCurrentUser() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-
-        Firestore.firestore().collection("users").document(uid).getDocument { [unowned self] snapshot, error in
-            if let error = error {
-                print(error)
-                return
-            }
-
-            guard let userData = snapshot?.data() else { return }
-            self.user = User(dictionary: userData)
-            self.loadUserPhotos()
-
-            self.tableView.reloadData()
-        }
     }
 
     fileprivate func loadUserPhotos() {
@@ -283,7 +281,9 @@ extension SettingsController {
                 return
             }
 
-            print("Finished saving user info")
+            self.dismiss(animated: true) {
+                self.delegate?.didSaveSettings()
+            }
         }
     }
 

@@ -18,6 +18,8 @@ class HomeController: UIViewController {
 
     var cardViewModels = [CardViewModel]()
     var lastFetchedUser: User?
+    fileprivate var user: User?
+    fileprivate let hud = JGProgressHUD(style: .dark)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,8 +28,7 @@ class HomeController: UIViewController {
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
 
         setupLayout()
-        setupUserCards()
-        fetchUsers()
+        fetchCurrentUser()
     }
 
     // MARK:- Fileprivate
@@ -65,14 +66,12 @@ class HomeController: UIViewController {
     }
 
     fileprivate func fetchUsers() {
-        let hud = JGProgressHUD(style: .dark)
-        hud.textLabel.text = "Fetching Users"
-        hud.show(in: view)
+        guard let minAge = user?.minSeekingAge, let maxAge = user?.maxSeekingAge else { return }
 
-        let query = Firestore.firestore().collection("users").order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 2)
+        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge)
 
         query.getDocuments { [unowned self] snapshot, error in
-            hud.dismiss()
+            self.hud.dismiss()
             if let error = error {
                 print("Failed to fetch users: ", error)
                 return
@@ -87,13 +86,34 @@ class HomeController: UIViewController {
             }
         }
     }
+
+    fileprivate func fetchCurrentUser() {
+        hud.textLabel.text = "Loading"
+        hud.show(in: view)
+
+        cardsDeckView.subviews.forEach { $0.removeFromSuperview() }
+
+        Firestore.firestore().fetchCurrentUser { [unowned self] user, error in
+            if let error = error {
+                print("Failed to fetch current user: ", error)
+                self.hud.dismiss()
+                return
+            }
+
+            self.user = user
+            self.fetchUsers()
+        }
+    }
 }
 
 extension HomeController {
     @objc func handleSettings() {
         let settingsController = SettingsController()
-        let navController = UINavigationController(rootViewController: settingsController)
+        settingsController.delegate = self
         settingsController.modalPresentationStyle = .fullScreen
+
+        let navController = UINavigationController(rootViewController: settingsController)
+
         present(navController, animated: true, completion: nil)
     }
 
@@ -102,3 +122,8 @@ extension HomeController {
     }
 }
 
+extension HomeController: SettingsControllerDelegate {
+    func didSaveSettings() {
+        self.fetchCurrentUser()
+    }
+}
