@@ -33,7 +33,6 @@ class RegistrationController: UIViewController {
     let fullNameTextField: CustomTextField = {
         let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter full name"
-        textField.backgroundColor = .white
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
 
         return textField
@@ -43,7 +42,6 @@ class RegistrationController: UIViewController {
         let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter email"
         textField.keyboardType = .emailAddress
-        textField.backgroundColor = .white
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
 
         return textField
@@ -53,7 +51,6 @@ class RegistrationController: UIViewController {
         let textField = CustomTextField(padding: 24)
         textField.placeholder = "Enter password"
         textField.isSecureTextEntry = true
-        textField.backgroundColor = .white
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
 
         return textField
@@ -70,6 +67,16 @@ class RegistrationController: UIViewController {
         button.isEnabled = false
         button.layer.cornerRadius = 22
         button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+
+        return button
+    }()
+
+    let goToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Go to Login", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        button.addTarget(self, action: #selector(handleGoToLogin), for: .touchUpInside)
 
         return button
     }()
@@ -162,6 +169,8 @@ class RegistrationController: UIViewController {
     }
 
     fileprivate func setupLayout() {
+        navigationController?.isNavigationBarHidden = true
+
         view.addSubview(overallStackView)
 
         overallStackView.axis = .vertical
@@ -173,6 +182,12 @@ class RegistrationController: UIViewController {
                          trailing: view.trailingAnchor,
                          padding: .init(top: 0, left: 48, bottom: 0, right: 48))
         overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
+        view.addSubview(goToLoginButton)
+        goToLoginButton.anchor(top: nil,
+                               leading: view.leadingAnchor,
+                               bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                               trailing: view.trailingAnchor)
     }
 
     fileprivate func setupNotificationObservers() {
@@ -243,6 +258,12 @@ extension RegistrationController {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         present(imagePickerController, animated: true)
+    }
+
+    @objc fileprivate func handleGoToLogin() {
+        let loginController = LoginController()
+
+        navigationController?.pushViewController(loginController, animated: true)
     }
 }
 

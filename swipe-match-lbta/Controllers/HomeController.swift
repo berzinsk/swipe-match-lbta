@@ -31,6 +31,17 @@ class HomeController: UIViewController {
         fetchCurrentUser()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if Auth.auth().currentUser == nil {
+            let loginController = LoginController()
+            loginController.delegate = self
+            let navController = UINavigationController(rootViewController: loginController)
+            present(navController, animated: true)
+        }
+    }
+
     // MARK:- Fileprivate
     fileprivate func setupLayout() {
         view.backgroundColor = .white
@@ -125,5 +136,11 @@ extension HomeController {
 extension HomeController: SettingsControllerDelegate {
     func didSaveSettings() {
         self.fetchCurrentUser()
+    }
+}
+
+extension HomeController: LoginControllerDelegate {
+    func didFinishLoggingIn() {
+        fetchCurrentUser()
     }
 }
