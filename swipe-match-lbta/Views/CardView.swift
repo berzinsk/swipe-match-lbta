@@ -9,7 +9,21 @@
 import UIKit
 import SDWebImage
 
+protocol CardViewDelegate {
+    func didTapMoreInfo()
+}
+
 class CardView: UIView {
+    var delegate: CardViewDelegate?
+
+    fileprivate let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "info_icon").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
+
+        return button
+    }()
+
     var cardViewModel: CardViewModel! {
         didSet {
             let imageName = cardViewModel.imageNames.first ?? ""
@@ -81,6 +95,14 @@ class CardView: UIView {
 
         informationLabel.textColor = .white
         informationLabel.numberOfLines = 0
+
+        addSubview(moreInfoButton)
+        moreInfoButton.anchor(top: nil,
+                              leading: nil,
+                              bottom: bottomAnchor,
+                              trailing: trailingAnchor,
+                              padding: .init(top: 0, left: 0, bottom: 16, right: 16),
+                              size: .init(width: 44, height: 44))
     }
 
     fileprivate func setupBarsStackView() {
@@ -108,33 +130,6 @@ class CardView: UIView {
             self.imageView.sd_setImage(with: URL(string: imageUrl ?? ""))
             self.barsStackView.arrangedSubviews.forEach { $0.backgroundColor = self.barDeselectedColor }
             self.barsStackView.arrangedSubviews[idx].backgroundColor = .white
-        }
-    }
-
-    @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            // remove animations when dragging to stop weird behavior when card randomly appears when dragging
-            superview?.subviews.forEach { $0.layer.removeAllAnimations() }
-        case .changed:
-            handleChanged(gesture: gesture)
-        case .ended:
-            handleEnded(gesture: gesture)
-        default:
-            break
-        }
-    }
-
-    @objc fileprivate func handleTap(gesture: UITapGestureRecognizer) {
-        guard let vm = cardViewModel, vm.imageNames.count > 1 else { return }
-
-        let tapLocation = gesture.location(in: nil)
-        let shouldAdvanceNextPhoto = tapLocation.x > frame.width / 2 ? true : false
-
-        if shouldAdvanceNextPhoto {
-            cardViewModel.advanceToNextPhoto()
-        } else {
-            cardViewModel.goToPreviousPhoto()
         }
     }
 
@@ -167,5 +162,38 @@ class CardView: UIView {
             }
 //            self.frame = .init(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
         })
+    }
+}
+
+extension CardView {
+    @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            // remove animations when dragging to stop weird behavior when card randomly appears when dragging
+            superview?.subviews.forEach { $0.layer.removeAllAnimations() }
+        case .changed:
+            handleChanged(gesture: gesture)
+        case .ended:
+            handleEnded(gesture: gesture)
+        default:
+            break
+        }
+    }
+
+    @objc fileprivate func handleTap(gesture: UITapGestureRecognizer) {
+        guard let vm = cardViewModel, vm.imageNames.count > 1 else { return }
+
+        let tapLocation = gesture.location(in: nil)
+        let shouldAdvanceNextPhoto = tapLocation.x > frame.width / 2 ? true : false
+
+        if shouldAdvanceNextPhoto {
+            cardViewModel.advanceToNextPhoto()
+        } else {
+            cardViewModel.goToPreviousPhoto()
+        }
+    }
+
+    @objc fileprivate func handleMoreInfo() {
+        delegate?.didTapMoreInfo()
     }
 }

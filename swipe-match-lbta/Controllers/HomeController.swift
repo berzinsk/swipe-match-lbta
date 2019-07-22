@@ -11,13 +11,10 @@ import Firebase
 import JGProgressHUD
 
 class HomeController: UIViewController {
+    fileprivate let topStackView = TopNavigationStackView()
+    fileprivate let cardsDeckView = UIView()
+    fileprivate let bottomControls = HomeBottomControlsStackView()
 
-    let topStackView = TopNavigationStackView()
-    let cardsDeckView = UIView()
-    let bottomControls = HomeBottomControlsStackView()
-
-    var cardViewModels = [CardViewModel]()
-    var lastFetchedUser: User?
     fileprivate var user: User?
     fileprivate let hud = JGProgressHUD(style: .dark)
 
@@ -58,18 +55,9 @@ class HomeController: UIViewController {
         overallStackView.bringSubviewToFront(cardsDeckView)
     }
 
-    fileprivate func setupUserCards() {
-        cardViewModels.forEach { cardVM in
-            let cardView = CardView()
-            cardView.cardViewModel = cardVM
-
-            cardsDeckView.addSubview(cardView)
-            cardView.fillSuperview()
-        }
-    }
-
     fileprivate func setupCardFor(user: User) {
         let cardView = CardView()
+        cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardsDeckView.addSubview(cardView)
         cardsDeckView.sendSubviewToBack(cardView)
@@ -79,7 +67,9 @@ class HomeController: UIViewController {
     fileprivate func fetchUsers() {
         guard let minAge = user?.minSeekingAge, let maxAge = user?.maxSeekingAge else { return }
 
-        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge)
+        let query = Firestore.firestore().collection("users")
+            .whereField("age", isGreaterThanOrEqualTo: minAge)
+            .whereField("age", isLessThanOrEqualTo: maxAge)
 
         query.getDocuments { [unowned self] snapshot, error in
             self.hud.dismiss()
@@ -91,9 +81,9 @@ class HomeController: UIViewController {
             snapshot?.documents.forEach { documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
-                self.cardViewModels.append(user.toCardViewModel())
-                self.lastFetchedUser = user
-                self.setupCardFor(user: user)
+                if user.uid != Auth.auth().currentUser?.uid {
+                    self.setupCardFor(user: user)
+                }
             }
         }
     }
@@ -142,5 +132,13 @@ extension HomeController: SettingsControllerDelegate {
 extension HomeController: LoginControllerDelegate {
     func didFinishLoggingIn() {
         fetchCurrentUser()
+    }
+}
+
+extension HomeController: CardViewDelegate {
+    func didTapMoreInfo() {
+        let controller = UserDetailsController()
+
+        present(controller, animated: true)
     }
 }
