@@ -14,7 +14,7 @@ protocol ProducesCardViewModel {
 
 class CardViewModel {
     // we'll define the properties that our view will display/render out
-    let imageNames: [String]
+    let imageUrls: [String]
     let attributedString: NSAttributedString
     let textAlignment: NSTextAlignment
 
@@ -23,19 +23,19 @@ class CardViewModel {
 
     fileprivate var imageIndex = 0 {
         didSet {
-            let imageUrl = imageNames[imageIndex]
+            let imageUrl = imageUrls[imageIndex]
             imageIndexObserver?(imageIndex, imageUrl)
         }
     }
 
     init(imageNames: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment) {
-        self.imageNames = imageNames
+        self.imageUrls = imageNames
         self.attributedString = attributedString
         self.textAlignment = textAlignment
     }
 
     func advanceToNextPhoto() {
-        imageIndex = min(imageIndex + 1, imageNames.count - 1)
+        imageIndex = min(imageIndex + 1, imageUrls.count - 1)
     }
 
     func goToPreviousPhoto() {

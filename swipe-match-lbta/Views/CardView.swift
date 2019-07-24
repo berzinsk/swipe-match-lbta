@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 protocol CardViewDelegate {
-    func didTapMoreInfo()
+    func didTapMoreInfo(cardViewModel: CardViewModel)
 }
 
 class CardView: UIView {
@@ -26,14 +26,14 @@ class CardView: UIView {
 
     var cardViewModel: CardViewModel! {
         didSet {
-            let imageName = cardViewModel.imageNames.first ?? ""
+            let imageName = cardViewModel.imageUrls.first ?? ""
             imageView.sd_setImage(with: URL(string: imageName))
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
 
-            guard cardViewModel.imageNames.count > 1 else { return }
+            guard cardViewModel.imageUrls.count > 1 else { return }
 
-            cardViewModel.imageNames.forEach { _ in
+            cardViewModel.imageUrls.forEach { _ in
                 let barView = UIView()
                 barView.backgroundColor = barDeselectedColor
                 barsStackView.addArrangedSubview(barView)
@@ -181,7 +181,7 @@ extension CardView {
     }
 
     @objc fileprivate func handleTap(gesture: UITapGestureRecognizer) {
-        guard let vm = cardViewModel, vm.imageNames.count > 1 else { return }
+        guard let vm = cardViewModel, vm.imageUrls.count > 1 else { return }
 
         let tapLocation = gesture.location(in: nil)
         let shouldAdvanceNextPhoto = tapLocation.x > frame.width / 2 ? true : false
@@ -194,6 +194,6 @@ extension CardView {
     }
 
     @objc fileprivate func handleMoreInfo() {
-        delegate?.didTapMoreInfo()
+        delegate?.didTapMoreInfo(cardViewModel: cardViewModel)
     }
 }

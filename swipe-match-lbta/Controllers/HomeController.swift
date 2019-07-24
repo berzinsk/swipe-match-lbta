@@ -136,8 +136,9 @@ extension HomeController: LoginControllerDelegate {
 }
 
 extension HomeController: CardViewDelegate {
-    func didTapMoreInfo() {
+    func didTapMoreInfo(cardViewModel: CardViewModel) {
         let controller = UserDetailsController()
+        controller.cardViewModel = cardViewModel
 
         present(controller, animated: true)
     }
