@@ -11,6 +11,7 @@
 		1226336022E20BE300CFB6B7 /* Extensions+Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1226335F22E20BE300CFB6B7 /* Extensions+Firestore.swift */; };
 		12378BA022E41D3C00FE1143 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12378B9F22E41D3C00FE1143 /* LoginController.swift */; };
 		12378BA322E41D6D00FE1143 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12378BA222E41D6D00FE1143 /* LoginViewModel.swift */; };
+		12541C0C22E9CFA20065D749 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12541C0B22E9CFA20065D749 /* PhotoController.swift */; };
 		1293AF7422E5FD4800747A43 /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1293AF7322E5FD4800747A43 /* UserDetailsController.swift */; };
 		12ABE1B222E8D711007407EE /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ABE1B122E8D711007407EE /* SwipingPhotosController.swift */; };
 		784EA587DEE16DA8F6767298 /* Pods_swipe_match_lbta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB88E1C7BA354C64DAEE39F8 /* Pods_swipe_match_lbta.framework */; };
@@ -43,6 +44,7 @@
 		1226335F22E20BE300CFB6B7 /* Extensions+Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+Firestore.swift"; sourceTree = "<group>"; };
 		12378B9F22E41D3C00FE1143 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		12378BA222E41D6D00FE1143 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		12541C0B22E9CFA20065D749 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		1293AF7322E5FD4800747A43 /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 		12ABE1B122E8D711007407EE /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		5711E0B38934A1D46061D096 /* Pods-swipe-match-lbta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swipe-match-lbta.release.xcconfig"; path = "Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta.release.xcconfig"; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				BA4B3CF822D786750041D4E0 /* CustomImagePickerController.swift */,
+				12541C0B22E9CFA20065D749 /* PhotoController.swift */,
 				1293AF7322E5FD4800747A43 /* UserDetailsController.swift */,
 				12ABE1B122E8D711007407EE /* SwipingPhotosController.swift */,
 				BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */,
@@ -334,6 +337,7 @@
 				12ABE1B222E8D711007407EE /* SwipingPhotosController.swift in Sources */,
 				12378BA322E41D6D00FE1143 /* LoginViewModel.swift in Sources */,
 				BAABDBF122AE452400BB3BD6 /* HomeController.swift in Sources */,
+				12541C0C22E9CFA20065D749 /* PhotoController.swift in Sources */,
 				1226336022E20BE300CFB6B7 /* Extensions+Firestore.swift in Sources */,
 				BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */,
 				BA4B3CFD22D79CC30041D4E0 /* SettingsCell.swift in Sources */,
