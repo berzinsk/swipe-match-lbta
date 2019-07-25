@@ -11,8 +11,10 @@ import UIKit
 class PhotoController: UIViewController {
     fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "kelly1"))
 
-    init(image: UIImage) {
-        imageView.image = image
+    init(imageUrl: String) {
+        if let url = URL(string: imageUrl) {
+            imageView.sd_setImage(with: url)
+        }
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -26,7 +28,7 @@ class PhotoController: UIViewController {
 
         view.addSubview(imageView)
         imageView.fillSuperview()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
     }
 }

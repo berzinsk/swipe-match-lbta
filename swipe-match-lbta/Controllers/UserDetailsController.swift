@@ -14,9 +14,7 @@ class UserDetailsController: UIViewController {
     var cardViewModel: CardViewModel! {
         didSet {
             infoLabel.attributedText = cardViewModel.attributedString
-
-            guard let firstImageUrl = cardViewModel.imageUrls.first, let url = URL(string: firstImageUrl) else { return }
-            imageView.sd_setImage(with: url)
+            swipingPhotosController.cardViewModel = cardViewModel
         }
     }
 
@@ -27,14 +25,6 @@ class UserDetailsController: UIViewController {
         scrollView.delegate = self
 
         return scrollView
-    }()
-
-    fileprivate let imageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-
-        return imageView
     }()
 
     fileprivate let infoLabel: UILabel = {
@@ -57,6 +47,10 @@ class UserDetailsController: UIViewController {
     lazy var superLikeButton = self.createButton(image: #imageLiteral(resourceName: "super_like_circle"), selector: #selector(handleDislike))
     lazy var likeButton = self.createButton(image: #imageLiteral(resourceName: "like_circle"), selector: #selector(handleDislike))
 
+    fileprivate let swipingPhotosController = SwipingPhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+
+    fileprivate let extraSwipingHeight: CGFloat = 80
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -65,24 +59,32 @@ class UserDetailsController: UIViewController {
         setupBottomControls()
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
+        let swipingView = swipingPhotosController.view!
+        swipingView.frame = .init(x: 0, y: 0, width: view.frame.width, height: view.frame.width + extraSwipingHeight)
+    }
+
     fileprivate func setupLayout() {
         view.backgroundColor = .white
 
         view.addSubview(scrollView)
         scrollView.fillSuperview()
 
-        scrollView.addSubview(imageView)
-        imageView.frame = .init(x: 0, y: 0, width: view.frame.width, height: view.frame.width)
+        let swipingView = swipingPhotosController.view!
+
+        scrollView.addSubview(swipingView)
 
         scrollView.addSubview(infoLabel)
-        infoLabel.anchor(top: imageView.bottomAnchor,
+        infoLabel.anchor(top: swipingView.bottomAnchor,
                          leading: scrollView.leadingAnchor,
                          bottom: nil,
                          trailing: scrollView.trailingAnchor,
                          padding: .init(top: 16, left: 16, bottom: 0, right: 16))
 
         scrollView.addSubview(dismissButton)
-        dismissButton.anchor(top: imageView.bottomAnchor,
+        dismissButton.anchor(top: swipingView.bottomAnchor,
                              leading: nil,
                              bottom: nil,
                              trailing: view.trailingAnchor,
@@ -143,6 +145,7 @@ extension UserDetailsController: UIScrollViewDelegate {
         width = max(view.frame.width, width)
         let position = min(0, -changeY)
 
-        imageView.frame = .init(x: position, y: position, width: width, height: width)
+        let swipingView = swipingPhotosController.view!
+        swipingView.frame = .init(x: position, y: position, width: width, height: width + extraSwipingHeight)
     }
 }

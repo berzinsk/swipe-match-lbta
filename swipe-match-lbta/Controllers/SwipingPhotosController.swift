@@ -9,13 +9,20 @@
 import UIKit
 
 class SwipingPhotosController: UIPageViewController {
-    let controllers = [
-        PhotoController(image: #imageLiteral(resourceName: "boost_circle")),
-        PhotoController(image: #imageLiteral(resourceName: "refresh_circle")),
-        PhotoController(image: #imageLiteral(resourceName: "like_circle")),
-        PhotoController(image: #imageLiteral(resourceName: "super_like_circle")),
-        PhotoController(image: #imageLiteral(resourceName: "dismiss_circle"))
-    ]
+    var cardViewModel: CardViewModel! {
+        didSet {
+            print(cardViewModel.attributedString)
+            controllers = cardViewModel.imageUrls.map { imageUrl -> UIViewController in
+                let photoController = PhotoController(imageUrl: imageUrl)
+
+                return photoController
+            }
+
+            setViewControllers([controllers.first!], direction: .forward, animated: false)
+        }
+    }
+
+    var controllers = [UIViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
