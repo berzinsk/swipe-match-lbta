@@ -125,10 +125,14 @@ extension SettingsController {
             let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil)
             ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAgeChange), for: .valueChanged)
             ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAgeChange), for: .valueChanged)
-            ageRangeCell.minLabel.text = "Min: \(user?.minSeekingAge ?? -1)"
-            ageRangeCell.maxLabel.text = "Max: \(user?.maxSeekingAge ?? -1)"
-            ageRangeCell.minSlider.value = Float(user?.minSeekingAge ?? 18)
-            ageRangeCell.maxSlider.value = Float(user?.maxSeekingAge ?? 18)
+
+            let minAge = user?.minSeekingAge ?? Constants.defaultMinSeekingAge
+            let maxAge = user?.maxSeekingAge ?? Constants.defaultMaxSeekingAge
+
+            ageRangeCell.minLabel.text = "Min: \(minAge)"
+            ageRangeCell.maxLabel.text = "Max: \(maxAge)"
+            ageRangeCell.minSlider.value = Float(minAge)
+            ageRangeCell.maxSlider.value = Float(maxAge)
 
             return ageRangeCell
         }

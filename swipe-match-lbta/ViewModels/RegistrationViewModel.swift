@@ -53,6 +53,12 @@ class RegistrationViewModel {
         }
     }
 
+    func checkFormValidity() {
+        let isFormValid = fullName?.isEmpty == false && email?.isEmpty == false &&
+            password?.isEmpty == false && bindableImage.value != nil
+        bindableIsFormValid.value = isFormValid
+    }
+
     fileprivate func storeImage(completion: @escaping Completion) {
         let filename = UUID().uuidString
         let ref = Storage.storage().reference(withPath: "/images/\(filename)")
@@ -81,7 +87,14 @@ class RegistrationViewModel {
             return
         }
 
-        let documentData = ["uid": uid, "fullName": fullName, "imageUrl1": imageUrl]
+        let documentData: [String: Any] = [
+            "uid": uid,
+            "fullName": fullName,
+            "imageUrl1": imageUrl,
+            "age": 18,
+            "minSeekingAge": Constants.defaultMinSeekingAge,
+            "maxSeekingAge": Constants.defaultMaxSeekingAge
+        ]
 
         Firestore.firestore().collection("users").document(uid).setData(documentData) { error in
             if let error = error {
@@ -92,11 +105,5 @@ class RegistrationViewModel {
             self.bindableIsRegistering.value = false
             completion(nil)
         }
-    }
-
-    fileprivate func checkFormValidity() {
-        let isFormValid = fullName?.isEmpty == false &&
-            email?.isEmpty == false && password?.isEmpty == false
-        bindableIsFormValid.value = isFormValid
     }
 }

@@ -13,6 +13,7 @@
 		12378BA322E41D6D00FE1143 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12378BA222E41D6D00FE1143 /* LoginViewModel.swift */; };
 		12541C0C22E9CFA20065D749 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12541C0B22E9CFA20065D749 /* PhotoController.swift */; };
 		1293AF7422E5FD4800747A43 /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1293AF7322E5FD4800747A43 /* UserDetailsController.swift */; };
+		129B6E2022EB22D700F140D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B6E1F22EB22D700F140D2 /* Constants.swift */; };
 		12ABE1B222E8D711007407EE /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ABE1B122E8D711007407EE /* SwipingPhotosController.swift */; };
 		784EA587DEE16DA8F6767298 /* Pods_swipe_match_lbta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB88E1C7BA354C64DAEE39F8 /* Pods_swipe_match_lbta.framework */; };
 		BA1C66C022CF9F4C00582CAE /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */; };
@@ -46,6 +47,7 @@
 		12378BA222E41D6D00FE1143 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		12541C0B22E9CFA20065D749 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		1293AF7322E5FD4800747A43 /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
+		129B6E1F22EB22D700F140D2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		12ABE1B122E8D711007407EE /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		5711E0B38934A1D46061D096 /* Pods-swipe-match-lbta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swipe-match-lbta.release.xcconfig"; path = "Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta.release.xcconfig"; sourceTree = "<group>"; };
 		BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -93,6 +95,14 @@
 			children = (
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		129B6E1E22EB22BB00F140D2 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				129B6E1F22EB22D700F140D2 /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		B2E3F6BF0350C830288E1B2A /* Pods */ = {
@@ -167,6 +177,7 @@
 		BAABDBED22AE452400BB3BD6 /* swipe-match-lbta */ = {
 			isa = PBXGroup;
 			children = (
+				129B6E1E22EB22BB00F140D2 /* Constants */,
 				1226335C22E2033200CFB6B7 /* Protocols */,
 				BA3877DD22D2390300DB00D9 /* Helpers */,
 				BA2A388E22CA3A8100F60E73 /* ViewModels */,
@@ -339,6 +350,7 @@
 				BAABDBF122AE452400BB3BD6 /* HomeController.swift in Sources */,
 				12541C0C22E9CFA20065D749 /* PhotoController.swift in Sources */,
 				1226336022E20BE300CFB6B7 /* Extensions+Firestore.swift in Sources */,
+				129B6E2022EB22D700F140D2 /* Constants.swift in Sources */,
 				BA51125C22D08A89003AE8A1 /* RegistrationViewModel.swift in Sources */,
 				BA4B3CFD22D79CC30041D4E0 /* SettingsCell.swift in Sources */,
 				BA1C66C222CFA4B600582CAE /* CustomTextField.swift in Sources */,

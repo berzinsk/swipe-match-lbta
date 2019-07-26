@@ -27,7 +27,7 @@ class CardView: UIView {
     var cardViewModel: CardViewModel! {
         didSet {
             let imageName = cardViewModel.imageUrls.first ?? ""
-            imageView.sd_setImage(with: URL(string: imageName))
+            imageView.sd_setImage(with: URL(string: imageName), placeholderImage: #imageLiteral(resourceName: "photo_placeholder"), options: .continueInBackground)
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
 
@@ -127,7 +127,7 @@ class CardView: UIView {
 
     fileprivate func setupImageIndexObserver() {
         cardViewModel.imageIndexObserver = { [unowned self] (idx, imageUrl) in
-            self.imageView.sd_setImage(with: URL(string: imageUrl ?? ""))
+            self.imageView.sd_setImage(with: URL(string: imageUrl ?? ""), placeholderImage: #imageLiteral(resourceName: "photo_placeholder"), options: .continueInBackground)
             self.barsStackView.arrangedSubviews.forEach { $0.backgroundColor = self.barDeselectedColor }
             self.barsStackView.arrangedSubviews[idx].backgroundColor = .white
         }
