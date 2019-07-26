@@ -32,9 +32,9 @@ class HomeController: UIViewController {
         super.viewDidAppear(animated)
 
         if Auth.auth().currentUser == nil {
-            let loginController = LoginController()
-            loginController.delegate = self
-            let navController = UINavigationController(rootViewController: loginController)
+            let registrationController = RegistrationController()
+            registrationController.delegate = self
+            let navController = UINavigationController(rootViewController: registrationController)
             present(navController, animated: true)
         }
     }

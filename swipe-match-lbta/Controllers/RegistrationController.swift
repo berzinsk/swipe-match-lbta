@@ -11,6 +11,7 @@ import Firebase
 import JGProgressHUD
 
 class RegistrationController: UIViewController {
+    var delegate: LoginControllerDelegate?
 
     fileprivate let registrationViewModel = RegistrationViewModel()
 
@@ -240,7 +241,9 @@ extension RegistrationController {
                 return
             }
 
-            print("Finished registering our user")
+            self.dismiss(animated: true) {
+                self.delegate?.didFinishLoggingIn()
+            }
         }
     }
 
