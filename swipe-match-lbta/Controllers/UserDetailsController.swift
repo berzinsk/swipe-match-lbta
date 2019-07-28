@@ -47,7 +47,7 @@ class UserDetailsController: UIViewController {
     lazy var superLikeButton = self.createButton(image: #imageLiteral(resourceName: "super_like_circle"), selector: #selector(handleDislike))
     lazy var likeButton = self.createButton(image: #imageLiteral(resourceName: "like_circle"), selector: #selector(handleDislike))
 
-    fileprivate let swipingPhotosController = SwipingPhotosController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    fileprivate let swipingPhotosController = SwipingPhotosController()
 
     fileprivate let extraSwipingHeight: CGFloat = 80
 
