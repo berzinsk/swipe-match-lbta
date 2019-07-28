@@ -14,6 +14,7 @@ class HomeController: UIViewController {
     fileprivate let topStackView = TopNavigationStackView()
     fileprivate let cardsDeckView = UIView()
     fileprivate let bottomControls = HomeBottomControlsStackView()
+    fileprivate var topCardView: CardView?
 
     fileprivate var user: User?
     fileprivate let hud = JGProgressHUD(style: .dark)
@@ -23,6 +24,7 @@ class HomeController: UIViewController {
 
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
+        bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
 
         setupLayout()
         fetchCurrentUser()
@@ -55,13 +57,15 @@ class HomeController: UIViewController {
         overallStackView.bringSubviewToFront(cardsDeckView)
     }
 
-    fileprivate func setupCardFor(user: User) {
+    fileprivate func setupCardFor(user: User) -> CardView {
         let cardView = CardView()
         cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardsDeckView.addSubview(cardView)
         cardsDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
+
+        return cardView
     }
 
     fileprivate func fetchUsers() {
@@ -79,11 +83,20 @@ class HomeController: UIViewController {
                 return
             }
 
+            var previousCardView: CardView?
+
             snapshot?.documents.forEach { documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 if user.uid != Auth.auth().currentUser?.uid {
-                    self.setupCardFor(user: user)
+                    let cardView = self.setupCardFor(user: user)
+
+                    previousCardView?.nextCardView = cardView
+                    previousCardView = cardView
+
+                    if self.topCardView == nil {
+                        self.topCardView = cardView
+                    }
                 }
             }
         }
@@ -122,6 +135,23 @@ extension HomeController {
     @objc func handleRefresh() {
         fetchUsers()
     }
+
+    @objc func handleLike() {
+        guard let topCardView = topCardView else { return }
+
+        UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+            topCardView.frame = CGRect(x: 600, y: 0, width: topCardView.frame.width, height: topCardView.frame.height)
+
+            let angle = 15 * CGFloat.pi / 180
+
+            topCardView.transform = CGAffineTransform(rotationAngle: angle)
+        }, completion: { _ in
+            self.topCardView?.removeFromSuperview()
+            self.topCardView = self.topCardView?.nextCardView
+        })
+
+
+    }
 }
 
 extension HomeController: SettingsControllerDelegate {
@@ -142,5 +172,10 @@ extension HomeController: CardViewDelegate {
         controller.cardViewModel = cardViewModel
 
         present(controller, animated: true)
+    }
+
+    func didRemoveCard(cardView: CardView) {
+        self.topCardView?.removeFromSuperview()
+        topCardView = cardView.nextCardView
     }
 }

@@ -11,10 +11,13 @@ import SDWebImage
 
 protocol CardViewDelegate {
     func didTapMoreInfo(cardViewModel: CardViewModel)
+    func didRemoveCard(cardView: CardView)
 }
 
 class CardView: UIView {
     var delegate: CardViewDelegate?
+
+    var nextCardView: CardView?
 
     fileprivate let moreInfoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -122,8 +125,8 @@ class CardView: UIView {
             self.transform = .identity
             if shouldDismissCard {
                 self.removeFromSuperview()
+                self.delegate?.didRemoveCard(cardView: self)
             }
-//            self.frame = .init(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
         })
     }
 }
