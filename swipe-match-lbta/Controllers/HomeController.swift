@@ -25,6 +25,7 @@ class HomeController: UIViewController {
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
+        bottomControls.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
 
         setupLayout()
         fetchCurrentUser()
@@ -76,6 +77,8 @@ class HomeController: UIViewController {
             .whereField("age", isGreaterThanOrEqualTo: minAge)
             .whereField("age", isLessThanOrEqualTo: maxAge)
 
+        topCardView = nil
+
         query.getDocuments { [unowned self] snapshot, error in
             self.hud.dismiss()
             if let error = error {
@@ -119,6 +122,33 @@ class HomeController: UIViewController {
             self.fetchUsers()
         }
     }
+
+    fileprivate func performSwipeAnimation(translation: CGFloat, angle: CGFloat) {
+        let duration = 0.5
+
+        let translationAnimation = CABasicAnimation(keyPath: "position.x")
+        translationAnimation.toValue = translation
+        translationAnimation.duration = duration
+        translationAnimation.fillMode = .forwards
+        translationAnimation.isRemovedOnCompletion = false
+        translationAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotationAnimation.toValue = angle * CGFloat.pi / 180
+        rotationAnimation.duration = duration
+
+        let cardView = topCardView
+        topCardView = cardView?.nextCardView
+
+        CATransaction.setCompletionBlock {
+            cardView?.removeFromSuperview()
+        }
+
+        cardView?.layer.add(translationAnimation, forKey: "translation")
+        cardView?.layer.add(rotationAnimation, forKey: "rotation")
+
+        CATransaction.commit()
+    }
 }
 
 extension HomeController {
@@ -133,24 +163,18 @@ extension HomeController {
     }
 
     @objc func handleRefresh() {
-        fetchUsers()
+        if topCardView == nil {
+            fetchUsers()
+        }
     }
 
     @objc func handleLike() {
-        guard let topCardView = topCardView else { return }
+        performSwipeAnimation(translation: 700, angle: 15)
+    }
 
-        UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
-            topCardView.frame = CGRect(x: 600, y: 0, width: topCardView.frame.width, height: topCardView.frame.height)
-
-            let angle = 15 * CGFloat.pi / 180
-
-            topCardView.transform = CGAffineTransform(rotationAngle: angle)
-        }, completion: { _ in
-            self.topCardView?.removeFromSuperview()
-            self.topCardView = self.topCardView?.nextCardView
-        })
-
-
+    @objc
+    fileprivate func handleDislike() {
+        performSwipeAnimation(translation: -300, angle: -15)
     }
 }
 
