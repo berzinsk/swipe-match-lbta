@@ -11,6 +11,11 @@ import Firebase
 import JGProgressHUD
 
 class HomeController: UIViewController {
+    enum LikeStatus: Int {
+        case like = 1
+        case dislike = 0
+    }
+
     fileprivate let topStackView = TopNavigationStackView()
     fileprivate let cardsDeckView = UIView()
     fileprivate let bottomControls = HomeBottomControlsStackView()
@@ -149,6 +154,39 @@ class HomeController: UIViewController {
 
         CATransaction.commit()
     }
+
+    fileprivate func saveSwipiInformation(likeStatus: LikeStatus) {
+        guard let uid = Auth.auth().currentUser?.uid, let cardUID = topCardView?.cardViewModel.uid else { return }
+
+        let documentData = [cardUID: likeStatus.rawValue]
+
+        Firestore.firestore().collection("swipes").document(uid).getDocument { snapshot, error in
+            if let error = error {
+                print("Failed to fetch swipe document: ", error)
+                return
+            }
+
+            if snapshot?.exists == true {
+                Firestore.firestore().collection("swipes").document(uid).updateData(documentData) { error in
+                    if let error = error {
+                        print("Failed to save swipe data: ", error)
+                        return
+                    }
+
+                    print("Successfully updated swipe...")
+                }
+            } else {
+                Firestore.firestore().collection("swipes").document(uid).setData(documentData) { error in
+                    if let error = error {
+                        print("Failed to save swipe data: ", error)
+                        return
+                    }
+
+                    print("Successfully saved swipe...")
+                }
+            }
+        }
+    }
 }
 
 extension HomeController {
@@ -169,11 +207,13 @@ extension HomeController {
     }
 
     @objc func handleLike() {
+        saveSwipiInformation(likeStatus: .like)
         performSwipeAnimation(translation: 700, angle: 15)
     }
 
     @objc
     fileprivate func handleDislike() {
+        saveSwipiInformation(likeStatus: .dislike)
         performSwipeAnimation(translation: -300, angle: -15)
     }
 }

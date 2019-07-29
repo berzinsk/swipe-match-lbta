@@ -36,6 +36,7 @@ struct User: ProducesCardViewModel {
     func toCardViewModel() -> CardViewModel {
         let ageString = age != nil ? "\(age!)" : "N\\A"
         let professionString = profession != nil ? profession! : "Not available"
+        let uid = self.uid ?? ""
 
         let attributedText = NSMutableAttributedString(string: name ?? "", attributes: [.font: UIFont.systemFont(ofSize: 32, weight: .heavy)])
         attributedText.append(NSMutableAttributedString(string: "  \(ageString)", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .regular)]))
@@ -46,6 +47,6 @@ struct User: ProducesCardViewModel {
         if let url = imageUrl2 { imageUrls.append(url) }
         if let url = imageUrl3 { imageUrls.append(url) }
 
-        return CardViewModel(imageNames: imageUrls, attributedString: attributedText, textAlignment: .left)
+        return CardViewModel(uid: uid, imageNames: imageUrls, attributedString: attributedText, textAlignment: .left)
     }
 }
