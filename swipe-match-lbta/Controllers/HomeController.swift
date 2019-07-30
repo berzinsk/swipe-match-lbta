@@ -20,6 +20,7 @@ class HomeController: UIViewController {
     fileprivate let cardsDeckView = UIView()
     fileprivate let bottomControls = HomeBottomControlsStackView()
     fileprivate var topCardView: CardView?
+    fileprivate var swipes = [String: Int]()
 
     fileprivate var user: User?
     fileprivate let hud = JGProgressHUD(style: .dark)
@@ -96,7 +97,10 @@ class HomeController: UIViewController {
             snapshot?.documents.forEach { documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
-                if user.uid != Auth.auth().currentUser?.uid {
+                let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
+                let hasNotSwipedBefore = self.swipes[user.uid!] == nil
+
+                if isNotCurrentUser && hasNotSwipedBefore {
                     let cardView = self.setupCardFor(user: user)
 
                     previousCardView?.nextCardView = cardView
@@ -124,6 +128,23 @@ class HomeController: UIViewController {
             }
 
             self.user = user
+            self.fetchSwipes()
+        }
+    }
+
+    fileprivate func fetchSwipes() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+
+        Firestore.firestore().collection("swipes").document(uid).getDocument { [unowned self] snapshot, error in
+            if let error = error {
+                print("Failed to fetch swipes for currently logged in user: ", error)
+                return
+            }
+
+            if let data = snapshot?.data() as? [String: Int] {
+                self.swipes = data
+            }
+
             self.fetchUsers()
         }
     }
@@ -155,12 +176,12 @@ class HomeController: UIViewController {
         CATransaction.commit()
     }
 
-    fileprivate func saveSwipiInformation(likeStatus: LikeStatus) {
+    fileprivate func saveSwipeInformation(likeStatus: LikeStatus) {
         guard let uid = Auth.auth().currentUser?.uid, let cardUID = topCardView?.cardViewModel.uid else { return }
 
         let documentData = [cardUID: likeStatus.rawValue]
 
-        Firestore.firestore().collection("swipes").document(uid).getDocument { snapshot, error in
+        Firestore.firestore().collection("swipes").document(uid).getDocument { [unowned self] snapshot, error in
             if let error = error {
                 print("Failed to fetch swipe document: ", error)
                 return
@@ -174,6 +195,7 @@ class HomeController: UIViewController {
                     }
 
                     print("Successfully updated swipe...")
+                    self.checkIfMatchExists(cardUID: cardUID)
                 }
             } else {
                 Firestore.firestore().collection("swipes").document(uid).setData(documentData) { error in
@@ -183,7 +205,28 @@ class HomeController: UIViewController {
                     }
 
                     print("Successfully saved swipe...")
+                    self.checkIfMatchExists(cardUID: cardUID)
                 }
+            }
+        }
+    }
+
+    fileprivate func checkIfMatchExists(cardUID: String) {
+        Firestore.firestore().collection("swipes").document(cardUID).getDocument { snapshot, error in
+            if let error = error {
+                print("Failed to fetch document for card user: ", error)
+                return
+            }
+
+            guard let data = snapshot?.data(), let uid = Auth.auth().currentUser?.uid else { return }
+            let hasMatched = data[uid] as? Int ==  1
+
+            if hasMatched {
+                print("Has matched")
+                let alert = UIAlertController(title: "It's a match", message: "You matched another user", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+
+                self.present(alert, animated: true)
             }
         }
     }
@@ -207,13 +250,13 @@ extension HomeController {
     }
 
     @objc func handleLike() {
-        saveSwipiInformation(likeStatus: .like)
+        saveSwipeInformation(likeStatus: .like)
         performSwipeAnimation(translation: 700, angle: 15)
     }
 
     @objc
     fileprivate func handleDislike() {
-        saveSwipiInformation(likeStatus: .dislike)
+        saveSwipeInformation(likeStatus: .dislike)
         performSwipeAnimation(translation: -300, angle: -15)
     }
 }
