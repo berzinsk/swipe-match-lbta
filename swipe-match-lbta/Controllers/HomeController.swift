@@ -98,7 +98,9 @@ class HomeController: UIViewController {
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
-                let hasNotSwipedBefore = self.swipes[user.uid!] == nil
+//                let hasNotSwipedBefore = self.swipes[user.uid!] == nil
+                // TODO: revert this later
+                let hasNotSwipedBefore = true
 
                 if isNotCurrentUser && hasNotSwipedBefore {
                     let cardView = self.setupCardFor(user: user)
@@ -195,7 +197,10 @@ class HomeController: UIViewController {
                     }
 
                     print("Successfully updated swipe...")
-                    self.checkIfMatchExists(cardUID: cardUID)
+
+                    if likeStatus == .like {
+                        self.checkIfMatchExists(cardUID: cardUID)
+                    }
                 }
             } else {
                 Firestore.firestore().collection("swipes").document(uid).setData(documentData) { error in
@@ -205,14 +210,17 @@ class HomeController: UIViewController {
                     }
 
                     print("Successfully saved swipe...")
-                    self.checkIfMatchExists(cardUID: cardUID)
+
+                    if likeStatus == .like {
+                        self.checkIfMatchExists(cardUID: cardUID)
+                    }
                 }
             }
         }
     }
 
     fileprivate func checkIfMatchExists(cardUID: String) {
-        Firestore.firestore().collection("swipes").document(cardUID).getDocument { snapshot, error in
+        Firestore.firestore().collection("swipes").document(cardUID).getDocument { [unowned self] snapshot, error in
             if let error = error {
                 print("Failed to fetch document for card user: ", error)
                 return
@@ -222,13 +230,16 @@ class HomeController: UIViewController {
             let hasMatched = data[uid] as? Int ==  1
 
             if hasMatched {
-                print("Has matched")
-                let alert = UIAlertController(title: "It's a match", message: "You matched another user", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
-
-                self.present(alert, animated: true)
+                self.presentMatchView(cardUID: cardUID)
             }
         }
+    }
+
+    fileprivate func presentMatchView(cardUID: String) {
+        let matchView = MatchView()
+
+        view.addSubview(matchView)
+        matchView.fillSuperview()
     }
 }
 
@@ -244,9 +255,8 @@ extension HomeController {
     }
 
     @objc func handleRefresh() {
-        if topCardView == nil {
-            fetchUsers()
-        }
+        cardsDeckView.subviews.forEach { $0.removeFromSuperview() }
+        fetchUsers()
     }
 
     @objc func handleLike() {

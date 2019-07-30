@@ -14,6 +14,7 @@
 		12541C0C22E9CFA20065D749 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12541C0B22E9CFA20065D749 /* PhotoController.swift */; };
 		1293AF7422E5FD4800747A43 /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1293AF7322E5FD4800747A43 /* UserDetailsController.swift */; };
 		129B6E2022EB22D700F140D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B6E1F22EB22D700F140D2 /* Constants.swift */; };
+		12A07AA922F0887F00E6FA30 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A07AA822F0887F00E6FA30 /* MatchView.swift */; };
 		12ABE1B222E8D711007407EE /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ABE1B122E8D711007407EE /* SwipingPhotosController.swift */; };
 		784EA587DEE16DA8F6767298 /* Pods_swipe_match_lbta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB88E1C7BA354C64DAEE39F8 /* Pods_swipe_match_lbta.framework */; };
 		BA1C66C022CF9F4C00582CAE /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */; };
@@ -48,6 +49,7 @@
 		12541C0B22E9CFA20065D749 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		1293AF7322E5FD4800747A43 /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 		129B6E1F22EB22D700F140D2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		12A07AA822F0887F00E6FA30 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 		12ABE1B122E8D711007407EE /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		5711E0B38934A1D46061D096 /* Pods-swipe-match-lbta.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-swipe-match-lbta.release.xcconfig"; path = "Target Support Files/Pods-swipe-match-lbta/Pods-swipe-match-lbta.release.xcconfig"; sourceTree = "<group>"; };
 		BA1C66BF22CF9F4C00582CAE /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				BA4B3CFA22D79C270041D4E0 /* SettingsHeaderLabel.swift */,
+				12A07AA822F0887F00E6FA30 /* MatchView.swift */,
 				BA4B3CFC22D79CC30041D4E0 /* SettingsCell.swift */,
 				BA8BD1C922B21B8A00C3BFEA /* CardView.swift */,
 				BAE18B0C22AFC8FE001BF8BB /* HomeBottomControlsStackView.swift */,
@@ -356,6 +359,7 @@
 				BA1C66C222CFA4B600582CAE /* CustomTextField.swift in Sources */,
 				BAE18B0D22AFC8FE001BF8BB /* HomeBottomControlsStackView.swift in Sources */,
 				BABF1A0322CD09E90030CF86 /* Advertiser.swift in Sources */,
+				12A07AA922F0887F00E6FA30 /* MatchView.swift in Sources */,
 				BAABDBEF22AE452400BB3BD6 /* AppDelegate.swift in Sources */,
 				BAABDC0222AE48CC00BB3BD6 /* Extensions+UIView.swift in Sources */,
 				BA2A389022CA3A9700F60E73 /* CardViewModel.swift in Sources */,
