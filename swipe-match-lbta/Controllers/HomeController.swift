@@ -10,12 +10,12 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class HomeController: UIViewController {
-    enum LikeStatus: Int {
-        case like = 1
-        case dislike = 0
-    }
+enum LikeStatus: Int {
+    case like = 1
+    case dislike = 0
+}
 
+class HomeController: UIViewController {
     fileprivate let topStackView = TopNavigationStackView()
     fileprivate let cardsDeckView = UIView()
     fileprivate let bottomControls = HomeBottomControlsStackView()
@@ -284,5 +284,13 @@ extension HomeController: CardViewDelegate {
     func didRemoveCard(cardView: CardView) {
         self.topCardView?.removeFromSuperview()
         topCardView = cardView.nextCardView
+    }
+
+    func didSwipe(likeStatus: LikeStatus) {
+        if likeStatus == .like {
+            handleLike()
+        } else {
+            handleDislike()
+        }
     }
 }

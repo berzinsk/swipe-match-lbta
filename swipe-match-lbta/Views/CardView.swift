@@ -12,6 +12,7 @@ import SDWebImage
 protocol CardViewDelegate {
     func didTapMoreInfo(cardViewModel: CardViewModel)
     func didRemoveCard(cardView: CardView)
+    func didSwipe(likeStatus: LikeStatus)
 }
 
 class CardView: UIView {
@@ -114,20 +115,18 @@ class CardView: UIView {
         let translationDirection: CGFloat = gesture.translation(in: nil).x > 0 ? 1 : -1
         let shouldDismissCard = abs(gesture.translation(in: nil).x) > treshold
 
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
-            if shouldDismissCard {
-                self.frame = .init(x: 600 * translationDirection, y: 0, width: self.frame.width, height: self.frame.height)
-            } else {
-                self.transform = .identity
-            }
-        }, completion: { _ in
-            // bring card back to screen
-            self.transform = .identity
-            if shouldDismissCard {
-                self.removeFromSuperview()
-                self.delegate?.didRemoveCard(cardView: self)
-            }
-        })
+        if shouldDismissCard {
+            delegate?.didSwipe(likeStatus: translationDirection == 1 ? .like : .dislike)
+        } else {
+            UIView.animate(withDuration: 1,
+                           delay: 0,
+                           usingSpringWithDamping: 0.6,
+                           initialSpringVelocity: 0.1,
+                           options: .curveEaseOut,
+                           animations: {
+                            self.transform = .identity
+            })
+        }
     }
 }
 
