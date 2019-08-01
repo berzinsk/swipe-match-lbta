@@ -237,6 +237,8 @@ class HomeController: UIViewController {
 
     fileprivate func presentMatchView(cardUID: String) {
         let matchView = MatchView()
+        matchView.cardUID = cardUID
+        matchView.currentUser = user
 
         view.addSubview(matchView)
         matchView.fillSuperview()

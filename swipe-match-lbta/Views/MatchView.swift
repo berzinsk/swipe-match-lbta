@@ -7,8 +7,36 @@
 //
 
 import UIKit
+import Firebase
 
 class MatchView: UIView {
+    var currentUser: User!
+
+    var cardUID: String! {
+        didSet {
+            let query = Firestore.firestore().collection("users")
+            query.document(cardUID).getDocument { snapshot, error in
+                if let error = error {
+                    print("Failed to fetch card user: ", error)
+                    return
+                }
+
+                guard let dictionary = snapshot?.data() else { return }
+                let user = User(dictionary: dictionary)
+                guard let urlString = user.imageUrl1, let url = URL(string: urlString), let name = user.name else { return }
+
+                self.descriptionLabel.text = "You and \(name) have liked\neach other"
+                self.cardUserImageView.alpha = 1
+                self.cardUserImageView.sd_setImage(with: url)
+
+                guard let currentUserUrlString = self.currentUser.imageUrl1, let currentUserImageUrl = URL(string: currentUserUrlString) else { return }
+                self.currentUserImageView.sd_setImage(with: currentUserImageUrl, completed: { _, _, _, _ in
+                    self.setupAnimations()
+                })
+            }
+        }
+    }
+
     fileprivate let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
 
     fileprivate let currentUserImageView: UIImageView = {
@@ -27,6 +55,7 @@ class MatchView: UIView {
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.alpha = 0
 
         return imageView
     }()
@@ -65,12 +94,20 @@ class MatchView: UIView {
         return button
     }()
 
+    fileprivate lazy var views = [
+        currentUserImageView,
+        cardUserImageView,
+        itsAMatchImageView,
+        descriptionLabel,
+        sendMessageButton,
+        keepSwipingButton
+    ]
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         setupBlurView()
         setupLayout()
-        setupAnimations()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -92,12 +129,10 @@ class MatchView: UIView {
     fileprivate func setupLayout() {
         let imageWidth: CGFloat = 140
 
-        addSubview(itsAMatchImageView)
-        addSubview(descriptionLabel)
-        addSubview(currentUserImageView)
-        addSubview(cardUserImageView)
-        addSubview(sendMessageButton)
-        addSubview(keepSwipingButton)
+        views.forEach { v in
+            addSubview(v)
+            v.alpha = 0
+        }
 
         itsAMatchImageView.anchor(top: nil,
                                   leading: nil,
@@ -149,6 +184,8 @@ class MatchView: UIView {
     }
 
     fileprivate func setupAnimations() {
+        views.forEach { $0.alpha = 1 }
+
         // starting positions
         let angle = 30 * CGFloat.pi / 180
 
